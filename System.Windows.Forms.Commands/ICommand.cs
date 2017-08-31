@@ -1,4 +1,4 @@
-﻿namespace System.Windows.Froms
+﻿namespace System.Windows.Forms
 {
     /// <summary>
     /// 定义一个命令体，提供执行方法。

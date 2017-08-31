@@ -1,4 +1,4 @@
-﻿namespace System.Windows.Froms
+﻿namespace System.Windows.Forms
 {
     /// <summary>
     /// 命令绑定。

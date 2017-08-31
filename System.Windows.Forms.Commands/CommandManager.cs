@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace System.Windows.Froms
+namespace System.Windows.Forms
 {
     /// <summary>
     /// 命令管理器。

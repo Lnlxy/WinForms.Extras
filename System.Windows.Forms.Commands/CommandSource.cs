@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.Windows.Froms
+namespace System.Windows.Forms
 {
     /// <summary>
     /// 包含命令和命令参数信息。

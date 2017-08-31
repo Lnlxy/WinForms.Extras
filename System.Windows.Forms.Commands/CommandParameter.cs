@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace System.Windows.Froms
+namespace System.Windows.Forms
 {
     /// <summary>
     /// 表示命令参数。

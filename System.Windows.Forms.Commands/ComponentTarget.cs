@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace System.Windows.Froms
+namespace System.Windows.Forms
 {
     /// <summary>
     /// 命令目标组件。

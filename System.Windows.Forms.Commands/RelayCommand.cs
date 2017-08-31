@@ -1,4 +1,4 @@
-﻿namespace System.Windows.Froms
+﻿namespace System.Windows.Forms
 {
     /// <summary>
     /// 提供执行指定方法的命令。
