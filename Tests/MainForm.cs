@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
-using System.Windows.Froms;
+using System.Windows.Forms;
 
 namespace Tests
 {

@@ -5,9 +5,14 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Forms.Bindings", "System.Windows.Forms.Bindings\System.Windows.Forms.Bindings.csproj", "{51EDF2BC-4C37-4BF2-9DE4-9163D55C165F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Froms.Commands", "System.Windows.Froms.Commands\System.Windows.Froms.Commands.csproj", "{34E6179B-A607-4724-974B-C0A2717B04DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows.Forms.Commands", "System.Windows.Forms.Commands\System.Windows.Forms.Commands.csproj", "{34E6179B-A607-4724-974B-C0A2717B04DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2B0C3B2E-BAF6-458E-B624-BAFFB3FA3D90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Globals", "Globals", "{CD66225D-E186-4E68-964C-A8FCA9B42FA2}"
+	ProjectSection(SolutionItems) = preProject
+		GlobalAssemblyInfo.cs = GlobalAssemblyInfo.cs
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

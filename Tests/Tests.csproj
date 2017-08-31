@@ -84,9 +84,9 @@
       <Project>{51edf2bc-4c37-4bf2-9de4-9163d55c165f}</Project>
       <Name>System.Windows.Forms.Bindings</Name>
     </ProjectReference>
-    <ProjectReference Include="..\System.Windows.Froms.Commands\System.Windows.Froms.Commands.csproj">
+    <ProjectReference Include="..\System.Windows.Forms.Commands\System.Windows.Forms.Commands.csproj">
       <Project>{34e6179b-a607-4724-974b-c0a2717b04db}</Project>
-      <Name>System.Windows.Froms.Commands</Name>
+      <Name>System.Windows.Forms.Commands</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
