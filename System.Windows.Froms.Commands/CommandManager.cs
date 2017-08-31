@@ -1,132 +1,116 @@
-﻿using System.Windows.Forms;
-using System.Threading;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Linq;
-using System.Diagnostics;
 
-namespace System.Windows.Froms.Commands
+namespace System.Windows.Froms
 {
+    /// <summary>
+    /// 命令管理器。
+    /// </summary>
     public static class CommandManager
     {
-
-        class RequerySuggestedCommandManager
-        {
-            class RequerySuggestedCommandFilter : IMessageFilter
-            {
-                private RequerySuggestedCommandManager requerySuggestedCommandManager;
-                public RequerySuggestedCommandFilter(RequerySuggestedCommandManager requerySuggestedCommandManager)
-                {
-                    this.requerySuggestedCommandManager = requerySuggestedCommandManager;
-                }
-                Stopwatch sw = Stopwatch.StartNew();
-                long ticks = 0;
-                public bool PreFilterMessage(ref Message m)
-                {
-                    if (m.Msg == 0xF)
-                    {
-                        return false;
-                    }
-                    if (m.Msg == 0x200)
-                    {
-                        return false;
-                    }
-                    if (m.Msg == 0xA0)
-                    {
-                        return false;
-                    }
-                    var time = sw.ElapsedMilliseconds - ticks;
-                    Debug.WriteLine($"Msg:{m.Msg.ToString("X")} {time} ms");
-                    requerySuggestedCommandManager.RaiseRequerySuggested();
-                    ticks = sw.ElapsedMilliseconds;
-                    return false;
-                }
-            }
-
-            public event System.EventHandler RequerySuggested;
-
-            public void Initialize()
-            {
-                Application.AddMessageFilter(new RequerySuggestedCommandFilter(this));
-            }
-
-            public void RaiseRequerySuggested()
-            {
-                RequerySuggested?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        private static readonly RequerySuggestedCommandManager requerySuggestedCommandManager = new RequerySuggestedCommandManager();
-        private static readonly List<CommandBinding> applicationCommandBindings = new List<CommandBinding>();
-
-        public static IEnumerable<CommandBinding> ApplicationCommandBindings { get => applicationCommandBindings; }
+        private static readonly List<CommandBinding> commandBindings = new List<CommandBinding>();
 
         /// <summary>
-        /// 检测可能更改要执行的命令的功能的条件时发生
+        /// 获取所有绑定信息。
         /// </summary>
-        public static event EventHandler RequerySuggested
+        public static IEnumerable<CommandBinding> CommandBindings { get => commandBindings; }
+
+        /// <summary> 
+        /// 添加绑定信息到指定的组件。
+        /// </summary>
+        /// <remarks>
+        /// 绑定要求：需指定组件的默认事件和 Enabled 属性。
+        /// 默认事件：<see cref="DefaultEventAttribute"/> 标记。
+        /// 默认属性：Enabled 显示实现。
+        /// </remarks>
+        /// <typeparam name="TSource">数据源类型。</typeparam>
+        /// <typeparam name="TParameter">参数类型。</typeparam>
+        /// <param name="component">组件。</param>
+        /// <param name="command">命令。</param>
+        /// <param name="source">数据源。</param>
+        /// <param name="parameterExpression">参数表达式。</param>
+        /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
+        public static CommandBinding Add<TSource, TParameter>(Component component, ICommand command, TSource source, Expression<Func<TSource, TParameter>> parameterExpression)
         {
-            add { requerySuggestedCommandManager.RequerySuggested += value; }
-            remove { requerySuggestedCommandManager.RequerySuggested -= value; }
+            var member = parameterExpression.Body as MemberExpression;
+            if (member.Member.MemberType != Reflection.MemberTypes.Property)
+            {
+                throw new InvalidOperationException($"{member.Member.Name} is not a property.");
+            }
+            return Add(component, command, source, member.Member.Name);
         }
 
         /// <summary>
-        /// 强制引发 <see cref="RequerySuggested"/> 事件。
+        /// 添加绑定信息到指定的组件。
         /// </summary>
-        public static void InvalidateRequerySuggested()
+        /// <remarks>
+        /// 绑定要求：需指定组件的默认事件和 Enabled 属性。
+        /// 默认事件：<see cref="DefaultEventAttribute"/> 标记。
+        /// 默认属性：Enabled 显示实现。
+        /// </remarks>
+        /// <param name="component">组件。</param>
+        /// <param name="command">命令。</param>
+        /// <param name="staticSourceType">静态数据源类型。</param>
+        /// <param name="parameter">参数。</param>
+        /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
+        public static CommandBinding Add(Component component, ICommand command, Type staticSourceType, string parameter)
         {
-            SynchronizationContext.Current.Post(delegate
-            {
-                requerySuggestedCommandManager.RaiseRequerySuggested();
-            }, null);
+            return Add(component, command, new CommandParameter(staticSourceType, parameter));
         }
 
-        public static void Initialize()
+        /// <summary>
+        /// 添加绑定信息到指定的组件。
+        /// </summary>
+        /// <remarks>
+        /// 绑定要求：需指定组件的默认事件和 Enabled 属性。
+        /// 默认事件：<see cref="DefaultEventAttribute"/> 标记。
+        /// 默认属性：Enabled 显示实现。
+        /// </remarks>
+        /// <param name="component">组件。</param>
+        /// <param name="command">命令。</param>
+        /// <param name="source">数据源。</param>
+        /// <param name="parameter">参数。</param>
+        /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
+        public static CommandBinding Add(Component component, ICommand command, Object source, string parameter)
         {
-            requerySuggestedCommandManager.Initialize();
+            return Add(component, command, new CommandParameter(source, parameter));
         }
 
-        public static CommandBinding Add(Control control, ICommand command, CommandParameter commandParameter)
-        {
-            return Add(control, new CommandSource(command, commandParameter));
-        }
-
-        public static CommandBinding Add(Control control, CommandSource commandSource)
-        {
-            var input = new ControlTarget(control);
-            return Add(input, commandSource);
-        }
-
-        public static CommandBinding Add(MenuItem component, ICommand command, CommandParameter commandParameter)
+        /// <summary>
+        /// 添加绑定信息到指定的组件。
+        /// </summary>
+        /// <remarks>
+        /// 绑定要求：需指定组件的默认事件和 Enabled 属性。
+        /// 默认事件：<see cref="DefaultEventAttribute"/> 标记。
+        /// 默认属性：Enabled 显示实现。
+        /// </remarks>
+        /// <param name="component">组件。</param>
+        /// <param name="command">命令。</param>
+        /// <param name="commandParameter">命令参数。</param>
+        /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
+        public static CommandBinding Add(Component component, ICommand command, CommandParameter commandParameter)
         {
             return Add(component, new CommandSource(command, commandParameter));
         }
 
-        public static CommandBinding Add(MenuItem component, CommandSource commandSource)
+        /// <summary>
+        /// 添加绑定信息到指定的组件。
+        /// </summary>
+        /// <remarks>
+        /// 绑定要求：需指定组件的默认事件和 Enabled 属性。
+        /// 默认事件：<see cref="DefaultEventAttribute"/> 标记。
+        /// 默认属性：Enabled 显示实现。
+        /// </remarks>
+        /// <param name="component">组件。</param>
+        /// <param name="commandSource">命令源。</param>
+        /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
+        public static CommandBinding Add(Component component, CommandSource commandSource)
         {
-            var input = new MenuItemTarget(component);
-            return Add(input, commandSource);
-        }
-
-        public static CommandBinding Add(ToolStripItem component, ICommand command, CommandParameter commandParameter)
-        {
-            return Add(component, new CommandSource(command, commandParameter));
-        }
-        public static CommandBinding Add(ToolStripItem component, CommandSource commandSource)
-        {
-            var input = new ToolStripItemTarget(component);
-            return Add(input, commandSource);
-        }
-        public static CommandBinding Add(IInputTarget input, ICommand command, CommandParameter commandParameter)
-        {
-            return Add(input, new CommandSource(command, commandParameter));
-        }
-        public static CommandBinding Add(IInputTarget input, CommandSource commandSource)
-        {
-            var binding = new CommandBinding(input, commandSource);
-            applicationCommandBindings.Add(binding);
+            var @event = TypeDescriptor.GetDefaultEvent(component);
+            var binding = new CommandBinding(commandSource, new ComponentTarget(component, @event));
+            commandBindings.Add(binding);
             return binding;
-        }
+        } 
     }
 }

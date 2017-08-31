@@ -1,4 +1,4 @@
-﻿namespace System.Windows.Froms.Commands
+﻿namespace System.Windows.Froms
 {
     /// <summary>
     /// 定义一个命令体，提供执行方法。
@@ -6,17 +6,16 @@
     public interface ICommand
     {
         /// <summary>
-        /// 当出现影响是否应执行该命令的更改时发生。
+        /// 确定表示该命令是否能被执行。
         /// </summary>
-        event EventHandler CanExecuteChanged;
-
-        /// <summary>
-        /// 确定一个值，表示该命令是否能被执行。
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
+        /// <param name="parameter">参数。</param>
+        /// <returns>返回一个值，该值表示命令是否执行。</returns>
         bool CanExecute(object parameter);
 
+        /// <summary>
+        /// 执行命令。
+        /// </summary>
+        /// <param name="parameter">参数。</param>
         void Execute(object parameter);
     }
 }

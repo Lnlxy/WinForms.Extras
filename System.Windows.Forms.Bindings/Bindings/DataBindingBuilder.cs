@@ -41,34 +41,25 @@ namespace System.Windows.Forms
         /// <param name="dataSource">数据源。</param>
         /// <param name="dataMemeberExpression">成员表达式。</param>
         /// <returns>返回设置完成后的 <see cref="DataBindingBuilder"/>。</returns>
-        public DataBindingBuilder SetDataSourceAndDataMemeber<TSource, TMemeber>(TSource dataSource, Expression<Func<TSource, TMemeber>> dataMemeberExpression)
+        public DataBindingBuilder SetDataSourceMemeber<TSource, TMemeber>(TSource dataSource, Expression<Func<TSource, TMemeber>> dataMemeberExpression)
         {
             var member = dataMemeberExpression.Body as MemberExpression;
             if (member.Member.MemberType != Reflection.MemberTypes.Property)
             {
                 throw new InvalidOperationException($"{member.Member.Name} is not a property.");
             }
-            return SetDataSource(dataSource).SetDataMember(member.Member.Name);
+            return SetDataSourceMemeber(dataSource, member.Member.Name);
         }
 
         /// <summary>
         /// 设置绑定数据源。
         /// </summary>
         /// <param name="dataSource">数据源。</param>
-        /// <returns>返回设置完成后的 <see cref="DataBindingBuilder"/>。</returns>
-        public DataBindingBuilder SetDataSource(object dataSource)
-        {
-            _dataSource = dataSource;
-            return this;
-        }
-
-        /// <summary>
-        /// 设置绑定成员。
-        /// </summary>
         /// <param name="dataMember">成员名称。</param>
         /// <returns>返回设置完成后的 <see cref="DataBindingBuilder"/>。</returns>
-        public DataBindingBuilder SetDataMember(string dataMember)
+        public DataBindingBuilder SetDataSourceMemeber(object dataSource, string dataMember)
         {
+            _dataSource = dataSource;
             _dataMember = dataMember;
             return this;
         }

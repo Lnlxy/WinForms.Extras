@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace System.Windows.Forms
+﻿namespace System.Windows.Forms
 {
     /// <summary>
     /// 提供对 <see cref="Binding"/> 设置的方法。

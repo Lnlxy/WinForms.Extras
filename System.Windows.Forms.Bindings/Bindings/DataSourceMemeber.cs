@@ -8,13 +8,13 @@ namespace System.Windows.Forms
     /// </summary>
     public class DataSourceMemeber
     {
-        private readonly PropertyInfo _propertyInfo;
+        private readonly PropertyDescriptor _property;
 
         public object DataSource { get; private set; }
 
         public string DateMember { get; private set; }
 
-        public Type DataMemberType => _propertyInfo.PropertyType;
+        public Type DataMemberType => _property.PropertyType;
 
         public Object DataSourceNullValue { get; set; }
 
@@ -24,19 +24,13 @@ namespace System.Windows.Forms
         {
             DataSource = dataSource;
             DateMember = dataMember;
-            _propertyInfo = DataSource.GetType().GetProperty(dataMember);
-            if (dataSource is INotifyPropertyChanged)
-            {
-                ((INotifyPropertyChanged)dataSource).PropertyChanged += MultiDataBindingParameter_PropertyChanged;
-            }
-            if (DataSource is Control)
-            {
-                var eventDescriptor = TypeDescriptor.GetEvents(DataSource).OfType<EventDescriptor>().FirstOrDefault(i => i.Name.Contains(DateMember));
-                if (eventDescriptor != null)
-                {
-                    eventDescriptor.AddEventHandler(dataSource, (EventHandler)OnMemberValueCHanged);
-                }
-            }
+            _property = TypeDescriptor.GetProperties(dataSource).Find(DateMember, false);
+            _property.AddValueChanged(dataSource, OnValueChanged);
+        }
+
+        private void OnValueChanged(object sender, EventArgs e)
+        {
+            DataMemberValueChanged?.Invoke(this, e);
         }
 
         private void OnMemberValueCHanged(object sender, EventArgs e)
@@ -52,20 +46,20 @@ namespace System.Windows.Forms
             }
         }
 
-        public object GetMemberValue()
+        public object GetDataMemberValue()
         {
             if (DataSource == null)
             {
                 return DataSourceNullValue;
             }
-            return _propertyInfo.GetValue(DataSource, null);
+            return _property.GetValue(DataSource);
         }
 
-        internal void SetMemberValue(object value)
+        internal void SetDataMemberValue(object value)
         {
-            if (DataSource != null)
+            if (DataSource != null && !_property.IsReadOnly)
             {
-                _propertyInfo.SetValue(DataSource, Convert.ChangeType(value, DataMemberType), null);
+                _property.SetValue(DataSource, Convert.ChangeType(value, DataMemberType));
             }
         }
     }

@@ -1,69 +1,81 @@
 ﻿using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Reflection;
 
-namespace System.Windows.Froms.Commands
+namespace System.Windows.Froms
 {
+    /// <summary>
+    /// 表示命令参数。
+    /// </summary>
     public class CommandParameter
     {
-        private readonly PropertyInfo _property;
+        private readonly PropertyDescriptor _property;
+
+        /// <summary>
+        /// 获取一个值，该值表示数据源。
+        /// </summary>
         public Object Source { get; private set; }
 
+        /// <summary>
+        /// 获取一个值，该值表示静态数据源类型。
+        /// </summary>
         public Type StaticSourceType { get; private set; }
 
+        /// <summary>
+        /// 获取一个值，该值表示参数名称。
+        /// </summary>
         public string ParameterName { get; private set; }
 
+        /// <summary>
+        /// 获取一个值，该值表示参数值。
+        /// </summary>
         public object ParameterValue => GetParameterValue();
 
+        /// <summary>
+        /// 当参数值发生改变时，发生。
+        /// </summary>
         public event EventHandler ParameterValueChanged;
 
-        public CommandParameter(Object source, string parameterName)
+        /// <summary>
+        /// 初始化 <see cref="CommandParameter"/> 新实例。
+        /// </summary>
+        /// <param name="source">数据源。</param>
+        /// <param name="parameterName">参数值。</param>
+        public CommandParameter(object source, string parameterName)
         {
-            _property = source.GetType().GetProperty(parameterName);
+            _property = TypeDescriptor.GetProperties(source).Find(parameterName, false);
             if (_property == null)
             {
                 throw new MemberAccessException($"Type:{source.GetType().FullName}, Property:{parameterName}");
             }
-            if (source is INotifyPropertyChanged)
-            {
-                ((INotifyPropertyChanged)Source).PropertyChanged += OnPropertyChanged;
-            }
+            _property.AddValueChanged(source, OnValueCHanged);
             Source = source;
             ParameterName = parameterName;
         }
 
+
+        /// <summary>
+        /// 初始化 <see cref="CommandParameter"/> 新实例。
+        /// </summary>
+        /// <param name="staticSourceType">静态数据源类型。。</param>
+        /// <param name="parameterName">参数值。</param>
         public CommandParameter(Type staticSourceType, string parameterName)
         {
-            _property = staticSourceType.GetProperty(parameterName, BindingFlags.Static);
+            _property = TypeDescriptor.GetProperties(staticSourceType).Find(parameterName, false);
             if (_property == null)
             {
                 throw new MemberAccessException($"Type:{staticSourceType.FullName}, Property:{parameterName}");
             }
-            if (staticSourceType.IsAssignableFrom(typeof(INotifyPropertyChanged)))
-            {
-                staticSourceType.GetEvent("PropertyChanged").AddEventHandler(null, (PropertyChangedEventHandler)OnPropertyChanged);
-            }
+            _property.AddValueChanged(_property.GetValue(null), OnValueCHanged);
             StaticSourceType = staticSourceType;
             ParameterName = parameterName;
         }
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnValueCHanged(object sender, EventArgs e)
         {
-            if (e.PropertyName.Equals(ParameterName))
-            {
-                ParameterValueChanged?.Invoke(this, EventArgs.Empty);
-            }
+            ParameterValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private object GetParameterValue()
         {
-            return Source == null ? _property.GetValue(null, null) : _property.GetValue(Source, null);
-        }
-
-        public static CommandParameter Create<TSource, TParameter>(TSource source, Expression<Func<TSource, TParameter>> parameterNameExpress)
-        {
-            var member = parameterNameExpress.Body as MemberExpression;
-            var parameter = member.Member.Name;
-            return new CommandParameter(source, parameter);
+            return _property.GetValue(Source);
         }
     }
 }

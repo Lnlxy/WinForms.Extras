@@ -1,32 +1,42 @@
-﻿using System.ComponentModel;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Windows.Forms;
-
-namespace System.Windows.Froms.Commands
+﻿namespace System.Windows.Froms
 {
-    public class CommandBinding
+    /// <summary>
+    /// 命令绑定。
+    /// </summary>
+    public sealed class CommandBinding
     {
-        public IInputTarget InputTarget { get; private set; }
+        /// <summary>
+        /// 获取一个值，该值表示此绑定信息唯一标记。
+        /// </summary>
+        public Guid Id { get; private set; }
 
-        public CommandSource CommandSource { get; private set; }
+        /// <summary>
+        /// 获取一个值，该值表示命令源。
+        /// </summary>
+        public CommandSource Source { get; private set; }
 
-        public CommandBinding(IInputTarget inputTarget, CommandSource commandSource)
+        /// <summary>
+        /// 获取一个值，该值表示命令目标。
+        /// </summary>
+        public ComponentTarget Target { get; private set; }
+
+        internal CommandBinding(CommandSource source, ComponentTarget target)
         {
-            InputTarget = inputTarget;
-            InputTarget.Click += InputTarget_Click;
-            CommandSource = commandSource;
-            CommandSource.RequerySuggested += CommandSource_RequerySuggested;
+            Id = Guid.NewGuid();
+            Source = source;
+            Source.RequerySuggested += CommandSource_RequerySuggested;
+            Target = target;
+            target.DefaultEventHandled += Target_DefaultEventHandled;
         }
 
-        private void InputTarget_Click(object sender, EventArgs e)
+        private void Target_DefaultEventHandled(object sender, EventArgs e)
         {
-            CommandSource.Execute();
+            Source.ExecuteCommand();
         }
 
         private void CommandSource_RequerySuggested(object sender, EventArgs e)
         {
-            InputTarget.Enabled = CommandSource.CanExecute();
-        } 
+            Target.Enabled = Source.CanExecuteCommand();
+        }
     }
 }

@@ -9,11 +9,11 @@ namespace System.Windows.Forms
     /// </summary>
     public class MultiDataBinding : Binding
     {
-        private readonly List<DataSourceMemeber> _parameters;
+        private readonly List<DataSourceMemeber> _members;
         public IMultiValueConverter Converter { get; set; }
         public object ConvertParameter { get; set; }
         public CultureInfo Culture { get; set; } = CultureInfo.CurrentCulture;
-        public IEnumerable<DataSourceMemeber> Parameters => _parameters.AsReadOnly();
+        public IEnumerable<DataSourceMemeber> SourceMemebers => _members.AsReadOnly();
         #region 隐藏的
         MultiDataBinding(string propertyName, object dataSource, string dataMember) : base(propertyName, dataSource, dataMember) { }
         MultiDataBinding(string propertyName, object dataSource, string dataMember, bool formattingEnabled) : base(propertyName, dataSource, dataMember, formattingEnabled) { }
@@ -24,11 +24,10 @@ namespace System.Windows.Forms
         #endregion
         public MultiDataBinding(string propertyName, IEnumerable<DataSourceMemeber> parameters) : base(propertyName, parameters.First().DataSource, parameters.First().DateMember)
         {
-            _parameters = new List<DataSourceMemeber>(parameters);
-            _parameters.ForEach(i => i.DataMemberValueChanged += ParameterValueChanged);
+            _members = new List<DataSourceMemeber>(parameters);
+            _members.ForEach(i => i.DataMemberValueChanged += ParameterValueChanged);
         }
-
-
+        
         /// <summary>
         /// 设置转换器。
         /// </summary> 
@@ -56,7 +55,7 @@ namespace System.Windows.Forms
 
         protected override void OnFormat(ConvertEventArgs cevent)
         {
-            var values = _parameters.ConvertAll(i => i.GetMemberValue()).ToArray();
+            var values = _members.ConvertAll(i => i.GetDataMemberValue()).ToArray();
             if (Converter != null)
             {
                 cevent.Value = Converter.Convert(values, cevent.DesiredType, ConvertParameter, Culture);
@@ -83,11 +82,11 @@ namespace System.Windows.Forms
         {
             if (Converter != null)
             {
-                var types = _parameters.ConvertAll(i => i.DataMemberType).ToArray();
+                var types = _members.ConvertAll(i => i.DataMemberType).ToArray();
                 var values = Converter.ConvertBack(cevent.Value, types, ConvertParameter, Culture);
-                for (int i = 0; i < _parameters.Count; i++)
+                for (int i = 0; i < _members.Count; i++)
                 {
-                    _parameters[i].SetMemberValue(values[i]);
+                    _members[i].SetDataMemberValue(values[i]);
                 }
             }
             else

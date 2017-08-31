@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace System.Windows.Forms
 {
+    /// <summary>
+    /// 提供构建 <see cref="MultiDataBinding"/> 实例的方法。
+    /// </summary>
     public class MultiDataBindingBuilder
     {
         private readonly Control _control;
@@ -34,7 +33,32 @@ namespace System.Windows.Forms
             _controlPropertyName = controlPropertyName;
         }
 
-        public MultiDataBindingBuilder SetParameters(params DataSourceMemeber[] parameters)
+        /// <summary>
+        /// 设置绑定数据成员。
+        /// </summary>
+        /// <typeparam name="TSource">数据源类型。</typeparam>
+        /// <typeparam name="TMemeber">成员类型。</typeparam>
+        /// <param name="dataSource">数据源。</param>
+        /// <param name="dataMemeberExpression">成员名称表达式。</param>
+        /// <returns>返回设置完成后的 <see cref="MultiDataBindingBuilder"/>。</returns>
+        public MultiDataBindingBuilder SetDataSourceMemeber<TSource, TMemeber>(TSource dataSource, Expression<Func<TSource, TMemeber>> dataMemeberExpression)
+        {
+            var member = dataMemeberExpression.Body as MemberExpression;
+            if (member.Member.MemberType != Reflection.MemberTypes.Property)
+            {
+                throw new InvalidOperationException($"{member.Member.Name} is not a property.");
+            }
+            var parameter = new DataSourceMemeber(dataSource, member.Member.Name);
+            _parameters.Add(parameter);
+            return this;
+        }
+
+        /// <summary>
+        /// 设置数据成员。
+        /// </summary>
+        /// <param name="parameters">数据成员列表。</param>
+        /// <returns></returns>
+        public MultiDataBindingBuilder SetDataSourceMemebers(params DataSourceMemeber[] parameters)
         {
             _parameters.AddRange(parameters);
             return this;
