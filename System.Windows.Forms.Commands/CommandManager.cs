@@ -40,25 +40,7 @@ namespace System.Windows.Forms
             }
             return Add(component, command, source, member.Member.Name);
         }
-
-        /// <summary>
-        /// 添加绑定信息到指定的组件。
-        /// </summary>
-        /// <remarks>
-        /// 绑定要求：需指定组件的默认事件和 Enabled 属性。
-        /// 默认事件：<see cref="DefaultEventAttribute"/> 标记。
-        /// 默认属性：Enabled 显示实现。
-        /// </remarks>
-        /// <param name="component">组件。</param>
-        /// <param name="command">命令。</param>
-        /// <param name="staticSourceType">静态数据源类型。</param>
-        /// <param name="parameter">参数。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
-        public static CommandBinding Add(Component component, ICommand command, Type staticSourceType, string parameter)
-        {
-            return Add(component, command, new CommandParameter(staticSourceType, parameter));
-        }
-
+          
         /// <summary>
         /// 添加绑定信息到指定的组件。
         /// </summary>

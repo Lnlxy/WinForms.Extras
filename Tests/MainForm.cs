@@ -92,6 +92,8 @@ namespace Tests
             {
                 return x >= 0 && x < 255;
             }), this, x => x.R);
+
+       
         }
 
         private void OnACHanged(object sender, EventArgs e)

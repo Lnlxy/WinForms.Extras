@@ -42,6 +42,7 @@
             this.lblColor = new System.Windows.Forms.Label();
             this.btnAddR = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtAppName = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudG)).BeginInit();
@@ -198,6 +199,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtAppName);
             this.groupBox2.Controls.Add(this.btnAddR);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(5, 118);
@@ -206,6 +208,13 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Command Bindings";
+            // 
+            // textBox1
+            // 
+            this.txtAppName.Location = new System.Drawing.Point(103, 109);
+            this.txtAppName.Name = "textBox1";
+            this.txtAppName.Size = new System.Drawing.Size(172, 21);
+            this.txtAppName.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -223,6 +232,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudR)).EndInit();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -243,6 +253,7 @@
         private System.Windows.Forms.Label lblTotal;
         private System.Windows.Forms.Button btnAddR;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox txtAppName;
     }
 }
 

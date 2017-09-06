@@ -26,20 +26,7 @@ namespace System.Windows.Forms
                 throw new InvalidOperationException($"{member.Member.Name} is not a property.");
             }
             return AddCommand(component, command, source, member.Member.Name);
-        }
-
-        /// <summary>
-        /// 添加命令。
-        /// </summary>
-        /// <param name="component">目标组件</param>
-        /// <param name="command">命令。</param>
-        /// <param name="staticSourceType">静态类型。</param>
-        /// <param name="parameter">参数。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
-        public static CommandBinding AddCommand(this Component component, ICommand command, Type staticSourceType, string parameter)
-        {
-            return AddCommand(component, command, new CommandParameter(staticSourceType, parameter));
-        }
+        } 
 
         /// <summary>
         /// 添加命令。
