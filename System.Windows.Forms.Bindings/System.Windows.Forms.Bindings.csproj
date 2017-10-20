@@ -53,10 +53,8 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Bindings\MultiDataBindingBuilder.cs" />
     <Compile Include="Bindings\DataSourceMemeber.cs" />
     <Compile Include="Bindings\BindingChain.cs" />
-    <Compile Include="Bindings\DataBindingBuilder.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Bindings\DataBinding.cs" />
     <Compile Include="IMultiValueConverter.cs" />

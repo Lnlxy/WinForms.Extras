@@ -1,81 +1,87 @@
-﻿using System.Globalization;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 10-20-2017
+//
+// ***********************************************************************
+// <copyright file="databinding.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2017 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+
+using System.Globalization;
 
 namespace System.Windows.Forms
 {
+    /// <summary>
+    /// 提供转换数据源成员数据后绑定到目标属性绑定信息。
+    /// </summary>
     public class DataBinding : Binding
     {
         /// <summary>
-        /// 获取或设置一个值，该值表示此绑定的值转换器。
+        /// 初始化 <see cref="DataBinding" 新实例。/>
         /// </summary>
-        public IValueConverter Converter { get; set; }
-
-        public object ConvertParameter { get; set; }
-
-        public CultureInfo Culture { get; set; } = CultureInfo.CurrentCulture;
-
-        public DataBinding(string propertyName, object dataSource, string dataMember) : base(propertyName, dataSource, dataMember)
-        {
-
-        }
-
-        /// <summary>
-        /// 设置转换器。
-        /// </summary> 
+        /// <param name="propertyName">绑定的属性名称。</param>
+        /// <param name="dataSource">数据源。</param>
+        /// <param name="dataMember">数据成员。</param>
         /// <param name="converter">转换器。</param>
-        /// <param name="convertParameter">转换时使用的参数。</param>
-        /// <returns>返回设置完成后的实例。</returns>
-        public DataBinding SetConverter(IValueConverter converter, object convertParameter)
+        /// <param name="convertParameter">转换参数。</param>
+        /// <param name="culture">区域信息。</param>
+        public DataBinding(string propertyName, object dataSource, string dataMember, IValueConverter converter, object convertParameter, CultureInfo culture) : base(propertyName, dataSource, dataMember)
         {
             Converter = converter;
             ConvertParameter = convertParameter;
-            return this;
+            Culture = culture;
         }
 
         /// <summary>
-        /// 设置转换时指定的区域信息。
+        /// 初始化 <see cref="DataBinding" 新实例。/>
         /// </summary>
-        /// <param name="culture">区域。</param>
-        /// <returns>返回设置完成后的实例。</returns>
-        public DataBinding SetCulture(CultureInfo culture)
+        /// <param name="propertyName">绑定的属性名称。</param>
+        /// <param name="dataSource">数据源。</param>
+        /// <param name="dataMember">数据成员。</param>
+        /// <param name="converter">转换器。</param>
+        public DataBinding(string propertyName, object dataSource, string dataMember, IValueConverter valueConverter)
+            : this(propertyName, dataSource, dataMember, valueConverter, null)
         {
-            Culture = culture;
-            return this;
         }
+
+        /// <summary>
+        /// 初始化 <see cref="DataBinding" 新实例。/>
+        /// </summary>
+        /// <param name="propertyName">绑定的属性名称。</param>
+        /// <param name="dataSource">数据源。</param>
+        /// <param name="dataMember">数据成员。</param>
+        /// <param name="converter">转换器。</param>
+        /// <param name="convertParameter">转换参数。</param>
+        public DataBinding(string propertyName, object dataSource, string dataMember, IValueConverter valueConverter, object convertParameter)
+            : this(propertyName, dataSource, dataMember, valueConverter, convertParameter, CultureInfo.CurrentCulture)
+        {
+        }
+
+        /// <summary>
+        /// 获取一个值，该值表示此绑定的值转换器。
+        /// </summary>
+        public IValueConverter Converter { get; private set; }
+
+        /// <summary>
+        /// 获取一个值，该值表示转换时，使用的参数信息。
+        /// </summary>
+        public object ConvertParameter { get; private set; }
+
+        /// <summary>
+        /// 获取一个值，该值表示转换时的区域信息。
+        /// </summary>
+        public CultureInfo Culture { get; private set; } 
 
         protected override void OnFormat(ConvertEventArgs cevent)
         {
-            if (Converter != null)
-            {
-                cevent.Value = Converter.Convert(cevent.Value, cevent.DesiredType, ConvertParameter, Culture);
-            }
-            else
-            {
-                cevent.Value = Convert.ChangeType(cevent.Value, cevent.DesiredType, Culture);
-            }
-            //if (FormattingEnabled && !string.IsNullOrEmpty(FormatString))
-            //{
-            //    if (FormatInfo != null)
-            //    {
-            //        cevent.Value = string.Format(FormatInfo, FormatString, cevent.Value);
-            //    }
-            //    else
-            //    {
-            //        cevent.Value = string.Format(FormatString, cevent.Value);
-            //    }
-            //}
-            base.OnFormat(cevent);
+            cevent.Value = Converter.Convert(cevent.Value, cevent.DesiredType, ConvertParameter, Culture);
         }
+
         protected override void OnParse(ConvertEventArgs cevent)
         {
-            if (Converter != null)
-            {
-                cevent.Value = Converter.ConvertBack(cevent.Value, cevent.DesiredType, ConvertParameter, Culture);
-            }
-            else
-            {
-                cevent.Value = Convert.ChangeType(cevent.Value, cevent.DesiredType, Culture);
-            }
-            base.OnParse(cevent);
+            cevent.Value = Converter.ConvertBack(cevent.Value, cevent.DesiredType, ConvertParameter, Culture);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 using System.Linq;
+using System.Linq.Expressions;
+
 namespace System.Windows.Forms
 {
     /// <summary>
@@ -33,19 +35,6 @@ namespace System.Windows.Forms
             DataMemberValueChanged?.Invoke(this, e);
         }
 
-        private void OnMemberValueCHanged(object sender, EventArgs e)
-        {
-            DataMemberValueChanged?.Invoke(this, e);
-        }
-
-        private void MultiDataBindingParameter_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals(DateMember))
-            {
-                DataMemberValueChanged?.Invoke(this, e);
-            }
-        }
-
         public object GetDataMemberValue()
         {
             if (DataSource == null)
@@ -61,6 +50,16 @@ namespace System.Windows.Forms
             {
                 _property.SetValue(DataSource, Convert.ChangeType(value, DataMemberType));
             }
+        }
+
+        public static DataSourceMemeber Create<TSource, TMember>(TSource dataSource, Expression<Func<TSource, TMember>> dataMemberExpression)
+        {
+            var member = dataMemberExpression.Body as MemberExpression;
+            if (member.Member.MemberType != MemberTypes.Property)
+            {
+                throw new InvalidOperationException($"{member.Member.Name} is not a property.");
+            }
+            return new DataSourceMemeber(dataSource, member.Member.Name);
         }
     }
 }

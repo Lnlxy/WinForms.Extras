@@ -27,6 +27,7 @@
             Source.RequerySuggested += CommandSource_RequerySuggested;
             Target = target;
             target.DefaultEventHandled += Target_DefaultEventHandled;
+            Target.Enabled = Source.CanExecuteCommand();
         }
 
         private void Target_DefaultEventHandled(object sender, EventArgs e)

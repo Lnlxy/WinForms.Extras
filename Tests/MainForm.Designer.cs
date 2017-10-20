@@ -43,6 +43,9 @@
             this.btnAddR = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtAppName = new System.Windows.Forms.TextBox();
+            this.btnAddGreen = new System.Windows.Forms.Button();
+            this.btnAddBlue = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudG)).BeginInit();
@@ -199,7 +202,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.txtAppName);
+            this.groupBox2.Controls.Add(this.btnAddBlue);
+            this.groupBox2.Controls.Add(this.btnAddGreen);
             this.groupBox2.Controls.Add(this.btnAddR);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(5, 118);
@@ -209,12 +215,37 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Command Bindings";
             // 
-            // textBox1
+            // txtAppName
             // 
             this.txtAppName.Location = new System.Drawing.Point(103, 109);
-            this.txtAppName.Name = "textBox1";
+            this.txtAppName.Name = "txtAppName";
             this.txtAppName.Size = new System.Drawing.Size(172, 21);
             this.txtAppName.TabIndex = 2;
+            // 
+            // btnAddGreen
+            // 
+            this.btnAddGreen.Location = new System.Drawing.Point(143, 20);
+            this.btnAddGreen.Name = "btnAddGreen";
+            this.btnAddGreen.Size = new System.Drawing.Size(75, 23);
+            this.btnAddGreen.TabIndex = 1;
+            this.btnAddGreen.Text = "Add Green";
+            this.btnAddGreen.UseVisualStyleBackColor = true;
+            // 
+            // btnAddBlue
+            // 
+            this.btnAddBlue.Location = new System.Drawing.Point(305, 20);
+            this.btnAddBlue.Name = "btnAddBlue";
+            this.btnAddBlue.Size = new System.Drawing.Size(75, 23);
+            this.btnAddBlue.TabIndex = 1;
+            this.btnAddBlue.Text = "Add Blue";
+            this.btnAddBlue.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(103, 165);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(172, 21);
+            this.textBox1.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -254,6 +285,9 @@
         private System.Windows.Forms.Button btnAddR;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox txtAppName;
+        private System.Windows.Forms.Button btnAddBlue;
+        private System.Windows.Forms.Button btnAddGreen;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 
