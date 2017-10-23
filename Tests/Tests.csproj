@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -81,13 +83,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\System.Windows.Forms.Bindings\System.Windows.Forms.Bindings.csproj">
-      <Project>{51edf2bc-4c37-4bf2-9de4-9163d55c165f}</Project>
-      <Name>System.Windows.Forms.Bindings</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\System.Windows.Forms.Commands\System.Windows.Forms.Commands.csproj">
-      <Project>{34e6179b-a607-4724-974b-c0a2717b04db}</Project>
-      <Name>System.Windows.Forms.Commands</Name>
+    <ProjectReference Include="..\WinForms.Extras\WinForms.Extras.csproj">
+      <Project>{f9e8f7dc-00cb-4b1d-a8ca-26ce4d8b389c}</Project>
+      <Name>WinForms.Extras</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

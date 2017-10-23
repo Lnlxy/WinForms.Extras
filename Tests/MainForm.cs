@@ -84,8 +84,8 @@ namespace Tests
             lblB.DataBinding(i => i.Text, nudB, i => i.Value, new ObjectToStringConverter())
                 .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             btnAddR.Command(this, i => i.R, i => R = i + 1, i => i >= 0 & i < 255);
-            btnAddGreen.Command(this, i => i.G, i => G = i + 1, i => i >= 0 & i < 255);
-            btnAddBlue.Command(this, i => i.B, i => B = i + 1, i => i >= 0 & i < 255);
+            btnAddG.Command(this, i => i.G, i => G = i + 1, i => i >= 0 & i < 255);
+            btnAddB.Command(this, i => i.B, i => B = i + 1, i => i >= 0 & i < 255);
 
         }
 
