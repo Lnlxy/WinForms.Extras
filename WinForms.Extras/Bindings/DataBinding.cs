@@ -9,10 +9,10 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Globalization;
-
 namespace System.Windows.Forms
 {
+    using System.Globalization;
+
     /// <summary>
     /// 提供转换数据源成员数据后绑定到目标属性绑定信息。
     /// </summary>
@@ -72,7 +72,7 @@ namespace System.Windows.Forms
         /// <summary>
         /// 获取一个值，该值表示转换时的区域信息。
         /// </summary>
-        public CultureInfo Culture { get; private set; } 
+        public CultureInfo Culture { get; private set; }
 
         protected override void OnFormat(ConvertEventArgs cevent)
         {

@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq.Expressions;
-
-namespace System.Windows.Forms
+﻿namespace System.Windows.Forms
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq.Expressions;
+
     /// <summary>
     /// 命令管理器。
     /// </summary>
@@ -16,31 +16,6 @@ namespace System.Windows.Forms
         /// </summary>
         public static IEnumerable<CommandBinding> CommandBindings { get => commandBindings; }
 
-        /// <summary> 
-        /// 添加绑定信息到指定的组件。
-        /// </summary>
-        /// <remarks>
-        /// 绑定要求：需指定组件的默认事件和 Enabled 属性。
-        /// 默认事件：<see cref="DefaultEventAttribute"/> 标记。
-        /// 默认属性：Enabled 显示实现。
-        /// </remarks>
-        /// <typeparam name="TSource">数据源类型。</typeparam>
-        /// <typeparam name="TParameter">参数类型。</typeparam>
-        /// <param name="component">组件。</param>
-        /// <param name="command">命令。</param>
-        /// <param name="source">数据源。</param>
-        /// <param name="parameterExpression">参数表达式。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
-        public static CommandBinding Add<TSource, TParameter>(Component component, ICommand command, TSource source, Expression<Func<TSource, TParameter>> parameterExpression)
-        {
-            var member = parameterExpression.Body as MemberExpression;
-            if (member.Member.MemberType != Reflection.MemberTypes.Property)
-            {
-                throw new InvalidOperationException($"{member.Member.Name} is not a property.");
-            }
-            return Add(component, command, source, member.Member.Name);
-        }
-          
         /// <summary>
         /// 添加绑定信息到指定的组件。
         /// </summary>
@@ -50,13 +25,14 @@ namespace System.Windows.Forms
         /// 默认属性：Enabled 显示实现。
         /// </remarks>
         /// <param name="component">组件。</param>
-        /// <param name="command">命令。</param>
-        /// <param name="source">数据源。</param>
-        /// <param name="parameter">参数。</param>
+        /// <param name="commandSource">命令源。</param>
         /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
-        public static CommandBinding Add(Component component, ICommand command, Object source, string parameter)
+        public static CommandBinding Add(Component component, CommandSource commandSource)
         {
-            return Add(component, command, new CommandParameter(source, parameter));
+            var @event = TypeDescriptor.GetDefaultEvent(component);
+            var binding = new CommandBinding(commandSource, new ComponentTarget(component, @event));
+            commandBindings.Add(binding);
+            return binding;
         }
 
         /// <summary>
@@ -85,14 +61,38 @@ namespace System.Windows.Forms
         /// 默认属性：Enabled 显示实现。
         /// </remarks>
         /// <param name="component">组件。</param>
-        /// <param name="commandSource">命令源。</param>
+        /// <param name="command">命令。</param>
+        /// <param name="source">数据源。</param>
+        /// <param name="parameter">参数。</param>
         /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
-        public static CommandBinding Add(Component component, CommandSource commandSource)
+        public static CommandBinding Add(Component component, ICommand command, Object source, string parameter)
         {
-            var @event = TypeDescriptor.GetDefaultEvent(component);
-            var binding = new CommandBinding(commandSource, new ComponentTarget(component, @event));
-            commandBindings.Add(binding);
-            return binding;
-        } 
+            return Add(component, command, new CommandParameter(source, parameter));
+        }
+
+        /// <summary> 
+        /// 添加绑定信息到指定的组件。
+        /// </summary>
+        /// <remarks>
+        /// 绑定要求：需指定组件的默认事件和 Enabled 属性。
+        /// 默认事件：<see cref="DefaultEventAttribute"/> 标记。
+        /// 默认属性：Enabled 显示实现。
+        /// </remarks>
+        /// <typeparam name="TSource">数据源类型。</typeparam>
+        /// <typeparam name="TParameter">参数类型。</typeparam>
+        /// <param name="component">组件。</param>
+        /// <param name="command">命令。</param>
+        /// <param name="source">数据源。</param>
+        /// <param name="parameterExpression">参数表达式。</param>
+        /// <returns>返回 <see cref="CommandBinding"/> 实例。</returns>
+        public static CommandBinding Add<TSource, TParameter>(Component component, ICommand command, TSource source, Expression<Func<TSource, TParameter>> parameterExpression)
+        {
+            var member = parameterExpression.Body as MemberExpression;
+            if (member.Member.MemberType != Reflection.MemberTypes.Property)
+            {
+                throw new InvalidOperationException($"{member.Member.Name} is not a property.");
+            }
+            return Add(component, command, source, member.Member.Name);
+        }
     }
 }

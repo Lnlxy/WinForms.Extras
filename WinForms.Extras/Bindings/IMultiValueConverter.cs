@@ -1,9 +1,9 @@
-﻿using System.Globalization;
-
-namespace System.Windows.Forms
+﻿namespace System.Windows.Forms
 {
+    using System.Globalization;
+
     public interface IMultiValueConverter
-    { 
+    {
         /// <summary>
         /// 将源值转换为绑定源的值。数据绑定引擎在将值从绑定源传播给绑定目标时，调用此方法。
         /// </summary>
@@ -13,7 +13,7 @@ namespace System.Windows.Forms
         /// <param name="culture">要用在转换器中的区域性。</param>
         /// <returns>转换后的值。如果该方法返回 null，则使用有效的 null 值。</returns>
         object Convert(object[] values, Type targetType, object parameter, CultureInfo culture);
-    
+
         /// <summary>
         /// 将绑定目标值转换为源绑定值。
         /// </summary>

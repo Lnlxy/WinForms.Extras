@@ -19,19 +19,6 @@
         }
 
         /// <summary>
-        /// 设置数据源更新方式。
-        /// </summary>
-        /// <typeparam name="TBinding">绑定类型。</typeparam>
-        /// <param name="binding">源。</param>
-        /// <param name="mode">模式。</param>
-        /// <returns>返回设置完成后的 <typeparamref name="TBinding"/>。</returns>
-        public static TBinding SetDataSourceUpdateMode<TBinding>(this TBinding binding, DataSourceUpdateMode mode) where TBinding : Binding
-        {
-            binding.DataSourceUpdateMode = mode;
-            return binding;
-        }
-
-        /// <summary>
         /// 设置数据源默认值。
         /// </summary>
         /// <typeparam name="TBinding">绑定类型。</typeparam>
@@ -41,6 +28,19 @@
         public static TBinding SetDataSourceNullValue<TBinding>(this TBinding binding, object value) where TBinding : Binding
         {
             binding.DataSourceNullValue = value;
+            return binding;
+        }
+
+        /// <summary>
+        /// 设置数据源更新方式。
+        /// </summary>
+        /// <typeparam name="TBinding">绑定类型。</typeparam>
+        /// <param name="binding">源。</param>
+        /// <param name="mode">模式。</param>
+        /// <returns>返回设置完成后的 <typeparamref name="TBinding"/>。</returns>
+        public static TBinding SetDataSourceUpdateMode<TBinding>(this TBinding binding, DataSourceUpdateMode mode) where TBinding : Binding
+        {
+            binding.DataSourceUpdateMode = mode;
             return binding;
         }
 

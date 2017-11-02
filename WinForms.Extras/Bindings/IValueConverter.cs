@@ -1,7 +1,7 @@
-﻿using System.Globalization;
-
-namespace System.Windows.Forms
+﻿namespace System.Windows.Forms
 {
+    using System.Globalization;
+
     /// <summary>
     /// 提供一种将自定义逻辑应用于绑定的方式。
     /// </summary>

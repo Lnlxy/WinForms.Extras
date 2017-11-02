@@ -6,6 +6,7 @@
     public sealed class RelayCommand : ICommand
     {
         private readonly Func<object, bool> _canExecute;
+
         private readonly Action<object> _execute;
 
         /// <summary>
@@ -15,6 +16,7 @@
         public RelayCommand(Action<object> execute) : this(execute, null)
         {
         }
+
         /// <summary>
         /// 初始化 <see cref="RelayCommand"/> 新实例。
         /// </summary>
@@ -53,15 +55,17 @@
     public sealed class RelayCommand<T> : ICommand
     {
         private readonly Func<T, bool> _canExecute;
+
         private readonly Action<T> _execute;
 
         /// <summary>
         /// 初始化 <see cref="RelayCommand{T}"/> 新实例。
         /// </summary>
-        /// <param name="execute">执行方法。</param> 
+        /// <param name="execute">执行方法。</param>
         public RelayCommand(Action<T> execute) : this(execute, null)
         {
         }
+
         /// <summary>
         /// 初始化 <see cref="RelayCommand{T}"/> 新实例。
         /// </summary>

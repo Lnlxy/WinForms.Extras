@@ -42,10 +42,10 @@
             this.lblColor = new System.Windows.Forms.Label();
             this.btnAddR = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.txtAppName = new System.Windows.Forms.TextBox();
-            this.btnAddG = new System.Windows.Forms.Button();
-            this.btnAddB = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtAppName = new System.Windows.Forms.TextBox();
+            this.btnAddB = new System.Windows.Forms.Button();
+            this.btnAddG = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudG)).BeginInit();
@@ -215,6 +215,14 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Command Bindings";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(103, 165);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(172, 21);
+            this.textBox1.TabIndex = 2;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            // 
             // txtAppName
             // 
             this.txtAppName.Location = new System.Drawing.Point(103, 109);
@@ -222,30 +230,23 @@
             this.txtAppName.Size = new System.Drawing.Size(172, 21);
             this.txtAppName.TabIndex = 2;
             // 
-            // btnAddGreen
-            // 
-            this.btnAddG.Location = new System.Drawing.Point(143, 20);
-            this.btnAddG.Name = "btnAddGreen";
-            this.btnAddG.Size = new System.Drawing.Size(75, 23);
-            this.btnAddG.TabIndex = 1;
-            this.btnAddG.Text = "Add Green";
-            this.btnAddG.UseVisualStyleBackColor = true;
-            // 
-            // btnAddBlue
+            // btnAddB
             // 
             this.btnAddB.Location = new System.Drawing.Point(305, 20);
-            this.btnAddB.Name = "btnAddBlue";
+            this.btnAddB.Name = "btnAddB";
             this.btnAddB.Size = new System.Drawing.Size(75, 23);
             this.btnAddB.TabIndex = 1;
             this.btnAddB.Text = "Add Blue";
             this.btnAddB.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // btnAddG
             // 
-            this.textBox1.Location = new System.Drawing.Point(103, 165);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(172, 21);
-            this.textBox1.TabIndex = 2;
+            this.btnAddG.Location = new System.Drawing.Point(143, 20);
+            this.btnAddG.Name = "btnAddG";
+            this.btnAddG.Size = new System.Drawing.Size(75, 23);
+            this.btnAddG.TabIndex = 1;
+            this.btnAddG.Text = "Add Green";
+            this.btnAddG.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

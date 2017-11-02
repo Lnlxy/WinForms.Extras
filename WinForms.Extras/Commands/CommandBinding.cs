@@ -5,6 +5,16 @@
     /// </summary>
     public sealed class CommandBinding
     {
+        internal CommandBinding(CommandSource source, ComponentTarget target)
+        {
+            Id = Guid.NewGuid();
+            Source = source;
+            Source.RequerySuggested += CommandSource_RequerySuggested;
+            Target = target;
+            target.DefaultEventHandled += Target_DefaultEventHandled;
+            Target.Enabled = Source.CanExecuteCommand();
+        }
+
         /// <summary>
         /// 获取一个值，该值表示此绑定信息唯一标记。
         /// </summary>
@@ -20,24 +30,14 @@
         /// </summary>
         public ComponentTarget Target { get; private set; }
 
-        internal CommandBinding(CommandSource source, ComponentTarget target)
+        private void CommandSource_RequerySuggested(object sender, EventArgs e)
         {
-            Id = Guid.NewGuid();
-            Source = source;
-            Source.RequerySuggested += CommandSource_RequerySuggested;
-            Target = target;
-            target.DefaultEventHandled += Target_DefaultEventHandled;
             Target.Enabled = Source.CanExecuteCommand();
         }
 
         private void Target_DefaultEventHandled(object sender, EventArgs e)
         {
             Source.ExecuteCommand();
-        }
-
-        private void CommandSource_RequerySuggested(object sender, EventArgs e)
-        {
-            Target.Enabled = Source.CanExecuteCommand();
         }
     }
 }

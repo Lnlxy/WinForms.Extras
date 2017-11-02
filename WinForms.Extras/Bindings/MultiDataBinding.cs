@@ -9,13 +9,12 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
-
 namespace System.Windows.Forms
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
+
     /// <summary>
     /// 多值绑定。
     /// </summary>
@@ -84,6 +83,7 @@ namespace System.Windows.Forms
         MultiDataBinding(string propertyName, object dataSource, string dataMember, bool formattingEnabled, DataSourceUpdateMode dataSourceUpdateMode, object nullValue, string formatString, IFormatProvider formatInfo) : base(propertyName, dataSource, dataMember, formattingEnabled, dataSourceUpdateMode, nullValue, formatString, formatInfo)
         {
         }
+
         /// <summary>
         /// 获取一个值，该值表示转换器。
         /// </summary>
@@ -106,7 +106,7 @@ namespace System.Windows.Forms
 
         protected override void OnFormat(ConvertEventArgs cevent)
         {
-            var values = _members.ConvertAll(i => i.GetDataMemberValue()).ToArray();
+            var values = _members.ConvertAll(i => i.GetValue()).ToArray();
             cevent.Value = Converter.Convert(values, cevent.DesiredType, ConvertParameter, Culture);
         }
 
@@ -116,7 +116,7 @@ namespace System.Windows.Forms
             var values = Converter.ConvertBack(cevent.Value, types, ConvertParameter, Culture);
             for (int i = 0; i < _members.Count; i++)
             {
-                _members[i].SetDataMemberValue(values[i]);
+                _members[i].SetValue(values[i]);
             }
         }
 

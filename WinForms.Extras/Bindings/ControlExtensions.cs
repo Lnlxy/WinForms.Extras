@@ -9,12 +9,12 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq.Expressions;
-
 namespace System.Windows.Forms
 {
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq.Expressions;
+
     /// <summary>
     /// 提创建命令绑定的方法。
     /// </summary>
@@ -31,6 +31,11 @@ namespace System.Windows.Forms
         public static Binding Binding(this Control control, string propertyName, object dataSource, string dateMember)
         {
             return control.DataBindings.Add(propertyName, dataSource, dateMember);
+        }
+        public static Binding Binding(this Control control, string propertyName, Type dataSourceType, string dateMember)
+        {
+            var dataSource = new DataSourceMemeber(dataSourceType, dateMember);
+            return control.DataBindings.Add(propertyName, dataSource, "Value");
         }
 
         /// <summary>
@@ -52,6 +57,7 @@ namespace System.Windows.Forms
             }
             return Binding(control, propertyName, dataSource, member.Member.Name);
         }
+
         /// <summary>
         /// 创建指定属性的绑定信息。
         /// </summary>
@@ -71,6 +77,7 @@ namespace System.Windows.Forms
             }
             return Binding(control, property.Member.Name, dataSource, dataMember);
         }
+
         /// <summary>
         /// 创建指定属性的绑定信息。
         /// </summary>
@@ -97,6 +104,7 @@ namespace System.Windows.Forms
             }
             return Binding(control, property.Member.Name, dataSource, member.Member.Name);
         }
+
         /// <summary>
         /// 创建指定属性的绑定信息。
         /// </summary>
@@ -114,6 +122,7 @@ namespace System.Windows.Forms
             control.DataBindings.Add(binding);
             return binding;
         }
+
         /// <summary>
         /// 创建指定属性的绑定信息。
         /// </summary>
@@ -132,6 +141,7 @@ namespace System.Windows.Forms
             var member = (dataMemberExpression.Body as MemberExpression).Member.Name;
             return DataBinding(control, propertyName, dataSource, member, converter, convertParameter, culture);
         }
+
         /// <summary>
         /// 创建指定属性的绑定信息。
         /// </summary>
@@ -150,6 +160,7 @@ namespace System.Windows.Forms
             var property = (propertyNameExpression.Body as MemberExpression).Member.Name;
             return DataBinding(control, property, dataSource, dataMember, converter, convertParameter, culture);
         }
+
         /// <summary>
         /// 创建指定属性的绑定信息。
         /// </summary>
@@ -171,6 +182,7 @@ namespace System.Windows.Forms
             var member = (dataMemberExpression.Body as MemberExpression).Member.Name;
             return DataBinding(control, property, dataSource, member, converter, convertParameter, culture);
         }
+
         /// <summary>
         /// 创建指定属性的绑定信息。
         /// </summary>
@@ -187,6 +199,7 @@ namespace System.Windows.Forms
             control.DataBindings.Add(binding);
             return binding;
         }
+
         /// <summary>
         /// 创建指定属性的绑定信息。
         /// </summary>

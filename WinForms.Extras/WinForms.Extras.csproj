@@ -57,10 +57,11 @@
     <Compile Include="Commands\ComponentCommandExtensions.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Internals\PropertyDescriptor.cs" />
+    <Compile Include="Internals\MemberDescriptor.cs" />
+    <Compile Include="Internals\SourceTypeDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Internals\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

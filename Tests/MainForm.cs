@@ -1,33 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Globalization;
-using System.Windows.Forms;
-
-namespace Tests
+﻿namespace Tests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Globalization;
+    using System.Windows.Forms;
+
     public partial class MainForm : Form, INotifyPropertyChanged
     {
         int r, g, b;
-        public int R
+
+        public MainForm()
         {
-            get { return r; }
-            set
-            {
-                r = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("R"));
-            }
+            InitializeComponent();
         }
-        public int G
-        {
-            get { return g; }
-            set
-            {
-                g = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("G"));
-            }
-        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public int B
         {
             get { return b; }
@@ -38,11 +28,26 @@ namespace Tests
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public MainForm()
+        public int G
         {
-            InitializeComponent();
+            get { return g; }
+            set
+            {
+                g = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("G"));
+            }
         }
+
+        public int R
+        {
+            get { return r; }
+            set
+            {
+                r = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("R"));
+            }
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -55,7 +60,7 @@ namespace Tests
                 DataSourceMemeber.Create(this, x => x.B),
             }, new MultiValueToStringConverter())
                 .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            txtAppName.Binding(i => i.Text, lblTotal, i => i.Text).SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
+            //txtAppName.Binding(i => i.Text, lblTotal, i => i.Text).SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
 
             nudR.Binding(i => i.Value, this, i => i.R)
                 .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
@@ -86,11 +91,12 @@ namespace Tests
             btnAddR.Command(this, i => i.R, i => R = i + 1, i => i >= 0 & i < 255);
             btnAddG.Command(this, i => i.G, i => G = i + 1, i => i >= 0 & i < 255);
             btnAddB.Command(this, i => i.B, i => B = i + 1, i => i >= 0 & i < 255);
-
+            this.Binding(i => i.Text, new DataSourceMemeber(typeof(App), "AppName"), "Value");
         }
 
-        private void OnACHanged(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            App.AppName = textBox1.Text;
         }
 
         private void lblColor_Click(object sender, EventArgs e)
@@ -103,6 +109,10 @@ namespace Tests
                 }
                 lblColor.BackColor = cd.Color;
             }
+        }
+
+        private void OnACHanged(object sender, EventArgs e)
+        {
         }
     }
 
