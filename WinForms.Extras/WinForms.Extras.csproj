@@ -42,20 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\DataBoundExtensions.cs" />
-    <Compile Include="Base\DataBoundItem.cs" />
-    <Compile Include="Base\IDataBoundItem.cs" />
-    <Compile Include="Base\MultiDataBoundItem.cs" />
-    <Compile Include="Base\StaticTypeDataBoundItem.cs" />
+    <Compile Include="Base\BindableExtensions.cs" />
+    <Compile Include="Base\BindableValue.cs" />
+    <Compile Include="Base\IBindableValue.cs" />
+    <Compile Include="Base\MultiBindableValue.cs" />
     <Compile Include="DataBindings\BindingChain.cs" />
     <Compile Include="DataBindings\Internals\Bindings\DataBinding.cs" />
     <Compile Include="DataBindings\Internals\Bindings\MultiDataBinding.cs" />
-    <Compile Include="DataBindings\ControlBindingExtensions.cs" />
+    <Compile Include="DataBindings\BindingExtensions.cs" />
     <Compile Include="Base\IMultiValueConverter.cs" />
     <Compile Include="Base\IValueConverter.cs" />
     <Compile Include="CommandBindings\CommandBinding.cs" />
     <Compile Include="CommandBindings\CommandManager.cs" />
-    <Compile Include="CommandBindings\CommandParameter.cs" />
     <Compile Include="CommandBindings\CommandSource.cs" />
     <Compile Include="CommandBindings\ComponentTarget.cs" />
     <Compile Include="CommandBindings\ComponentCommandExtensions.cs" />

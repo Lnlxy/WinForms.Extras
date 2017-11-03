@@ -53,9 +53,7 @@
             //textBox1.Binding(i => i.Text, this, i => i.Text)
             //    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
             //    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
-            var mdbi = new MultiDataBoundItem(this.CreateDataBoundItem(x => x.R),
-                this.CreateDataBoundItem(x => x.G),
-                this.CreateDataBoundItem(x => x.B));
+            var mdbi = this.CreateMultiBindableValue(i => i.R, i => i.G, i => i.B);
             lblTotal.Binding(i => i.Text, mdbi, new MultiValueToStringConverter())
                 .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             //txtAppName.Binding(i => i.Text, lblTotal, i => i.Text).SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);

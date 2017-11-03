@@ -1,25 +1,33 @@
-﻿using System.Windows.Forms.Internals;
+﻿using System.ComponentModel;
+using System.Windows.Forms.Internals;
 
 namespace System.Windows.Forms
 {
     /// <summary>
     /// 定义数据绑定项。
     /// </summary>
-    public class DataBoundItem : IDataBoundItem
+    public class BindableValue : IBindableValue
     {
+        private readonly object _dataSource = null;
+
         private readonly SourcePropertyDescriptor _property;
 
-        public DataBoundItem(object dataSource, string propertyName)
+        public BindableValue(object dataSource, string propertyName)
         {
-            DataSource = dataSource;
+            _dataSource = dataSource;
             PropertyName = propertyName;
             _property = SourceTypeDescriptor.GetProperty(dataSource, propertyName);
+            _property.AddValueChanged(_dataSource, OnValueChanged);
         }
 
-        /// <summary>
-        /// 获取一个值，该值表示数据源。
-        /// </summary>
-        public object DataSource { get; private set; }
+        public BindableValue(Type dataSourceType, string propertyName)
+        {
+            PropertyName = propertyName;
+            _property = SourceTypeDescriptor.GetProperty(dataSourceType, propertyName);
+            _property.AddValueChanged(_dataSource, OnValueChanged);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// 获取一个值，该值表示数据源类型。
@@ -31,32 +39,21 @@ namespace System.Windows.Forms
         /// </summary>
         public string PropertyName { get; private set; }
 
+        public object Value { get => _property.GetValue(_dataSource); set => _property.SetValue(_dataSource, value); }
+
         /// <summary>
         /// 获取一个值，该值表示属性类型。
         /// </summary>
         public Type ValueType => _property.PropertyType;
-
-        public object GetValue()
-        {
-            return _property.GetValue(DataSource);
-        }
-
-        public void SetValue(object value)
-        {
-            if (!_property.IsReadOnly)
-            {
-                _property.SetValue(DataSource, Convert.ChangeType(value, ValueType));
-            }
-        }
 
         public override string ToString()
         {
             return $"{{SourceType:{DataSourceType}, PropertyName:{PropertyName}}}";
         }
 
-        public void ValueChangedCallback(EventHandler callback)
+        private void OnValueChanged(object sender, EventArgs e)
         {
-            _property.AddValueChanged(DataSource, callback);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
         }
     }
 }

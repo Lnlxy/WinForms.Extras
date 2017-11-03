@@ -26,7 +26,7 @@ namespace System.Windows.Forms
         /// <param name="command">命令。</param>
         /// <param name="commandParameter">命令执行参数。</param>
         /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
-        public static CommandBinding Command(this Component component, ICommand command, CommandParameter commandParameter)
+        public static CommandBinding Command(this Component component, ICommand command, IBindableValue commandParameter)
         {
             return Command(component, new CommandSource(command, commandParameter));
         }
@@ -41,7 +41,7 @@ namespace System.Windows.Forms
         /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
         public static CommandBinding Command(this Component component, ICommand command, Object source, string parameter)
         {
-            return Command(component, command, new CommandParameter(source, parameter));
+            return Command(component, command, new BindableValue(source, parameter));
         }
 
         /// <summary>

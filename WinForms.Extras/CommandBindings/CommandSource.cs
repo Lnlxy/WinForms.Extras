@@ -10,13 +10,13 @@
         /// </summary>
         /// <param name="command">命令。</param>
         /// <param name="parameter">参数。</param>
-        public CommandSource(ICommand command, CommandParameter parameter)
+        public CommandSource(ICommand command, IBindableValue parameter)
         {
             Command = command;
             Parameter = parameter;
             if (parameter != null)
             {
-                parameter.ParameterValueChanged += OnRequerySuggested;
+                parameter.PropertyChanged += OnRequerySuggested;
             }
         }
 
@@ -33,16 +33,16 @@
         /// <summary>
         /// 获取一个值，该值表示命令参数。
         /// </summary>
-        public CommandParameter Parameter { get; private set; }
+        public IBindableValue Parameter { get; private set; }
 
         internal bool CanExecuteCommand()
         {
-            return Command.CanExecute(Parameter?.ParameterValue);
+            return Command.CanExecute(Parameter?.Value);
         }
 
         internal void ExecuteCommand()
         {
-            Command.Execute(Parameter?.ParameterValue);
+            Command.Execute(Parameter.Value);
         }
 
         private void OnRequerySuggested(object sender, EventArgs e)

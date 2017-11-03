@@ -16,7 +16,7 @@ namespace System.Windows.Forms
         /// <param name="propertyName">绑定的属性名称。</param>
         /// <param name="parameters">绑定源。</param>
         /// <param name="converter">转换器。</param>
-        public MultiDataBinding(string propertyName, MultiDataBoundItem item, IMultiValueConverter converter) : this(propertyName, item, converter, null, null)
+        public MultiDataBinding(string propertyName, MultiBindableValue item, IMultiValueConverter converter) : this(propertyName, item, converter, null, null)
         {
         }
 
@@ -27,7 +27,7 @@ namespace System.Windows.Forms
         /// <param name="parameters">绑定源。</param>
         /// <param name="converter">转换器。</param>
         /// <param name="convertParameter">转换参数。</param>
-        public MultiDataBinding(string propertyName, MultiDataBoundItem item, IMultiValueConverter converter, object convertParameter) : this(propertyName, item, converter, convertParameter, null)
+        public MultiDataBinding(string propertyName, MultiBindableValue item, IMultiValueConverter converter, object convertParameter) : this(propertyName, item, converter, convertParameter, null)
         {
         }
 
@@ -39,7 +39,7 @@ namespace System.Windows.Forms
         /// <param name="converter">转换器。</param>
         /// <param name="convertParameter">转换参数。</param>
         /// <param name="culture">转换区域。</param>
-        public MultiDataBinding(string propertyName, MultiDataBoundItem item, IMultiValueConverter converter, object convertParameter, CultureInfo culture) : base(propertyName, item, "Values")
+        public MultiDataBinding(string propertyName, MultiBindableValue item, IMultiValueConverter converter, object convertParameter, CultureInfo culture) : base(propertyName, item, "Value")
         {
             _types = item.ItemTypes;
             Converter = converter;

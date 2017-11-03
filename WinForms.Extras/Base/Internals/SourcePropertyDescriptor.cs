@@ -82,7 +82,10 @@ namespace System.Windows.Forms.Internals
 
         public void SetValue(object source, object value)
         {
-            _property.SetValue(source, value, null);
+            if (_property.CanWrite)
+            {
+                _property.SetValue(source, value, null);
+            }
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
