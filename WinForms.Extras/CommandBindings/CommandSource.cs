@@ -1,7 +1,5 @@
 ﻿namespace System.Windows.Forms
 {
-    using System;
-
     /// <summary>
     /// 包含命令和命令参数信息。
     /// </summary>

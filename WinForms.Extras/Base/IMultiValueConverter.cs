@@ -1,7 +1,7 @@
-﻿namespace System.Windows.Forms
-{
-    using System.Globalization;
+﻿using System.Globalization;
 
+namespace System.Windows.Forms
+{
     public interface IMultiValueConverter
     {
         /// <summary>

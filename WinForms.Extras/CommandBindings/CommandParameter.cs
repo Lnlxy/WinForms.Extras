@@ -1,15 +1,13 @@
-﻿namespace System.Windows.Forms
-{
-    using System.Windows.Forms.Internals;
+﻿using System.Windows.Forms.Internals;
 
+namespace System.Windows.Forms
+{
     /// <summary>
     /// 表示命令参数。
     /// </summary>
     public class CommandParameter
     {
-        private readonly PropertyDescriptor _property;
-
-        public Type DataSourceType { get => _property.ReflectedType; }
+        private readonly SourcePropertyDescriptor _property;
 
         /// <summary>
         /// 初始化 <see cref="CommandParameter"/> 新实例。
@@ -20,7 +18,7 @@
         {
             Source = source;
             _property = SourceTypeDescriptor.GetProperty(source, propertyName);
-            _property.AddValueChanged(null, OnValueCHanged);
+            _property.AddValueChanged(source, OnValueCHanged);
             ParameterName = propertyName;
         }
 
@@ -35,6 +33,8 @@
         /// 当参数值发生改变时，发生。
         /// </summary>
         public event EventHandler ParameterValueChanged;
+
+        public Type DataSourceType { get => _property.ReflectedType; }
 
         /// <summary>
         /// 获取一个值，该值表示参数名称。

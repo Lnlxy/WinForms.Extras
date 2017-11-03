@@ -1,22 +1,11 @@
-﻿// ***********************************************************************
-// Author           : Hoze(hoze@live.cn)
-// Created          : 10-20-2017
-//
-// ***********************************************************************
-// <copyright file="databinding.cs" company="Park Plus Inc.">
-//     Copyright 2015 - 2017 (c) Park Plus Inc. All rights reserved.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
+﻿using System.Globalization;
 
 namespace System.Windows.Forms
 {
-    using System.Globalization;
-
     /// <summary>
     /// 提供转换数据源成员数据后绑定到目标属性绑定信息。
     /// </summary>
-    public class DataBinding : Binding
+    class DataBinding : Binding
     {
         /// <summary>
         /// 初始化 <see cref="DataBinding" 新实例。/>

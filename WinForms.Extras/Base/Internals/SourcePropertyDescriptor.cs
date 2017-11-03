@@ -1,10 +1,10 @@
-﻿namespace System.Windows.Forms.Internals
-{
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Reflection;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
 
-    internal class PropertyDescriptor : MemberDescriptor
+namespace System.Windows.Forms.Internals
+{
+    internal class SourcePropertyDescriptor : SourceMemberDescriptor
     {
         private readonly PropertyInfo _property;
 
@@ -12,7 +12,7 @@
 
         private readonly object syncObj = new object();
 
-        public PropertyDescriptor(PropertyInfo propertyInfo) : base(propertyInfo.Name)
+        public SourcePropertyDescriptor(PropertyInfo propertyInfo) : base(propertyInfo.Name)
         {
             _property = propertyInfo;
         }

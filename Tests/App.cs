@@ -6,15 +6,7 @@ namespace Tests
     {
         private static string appName;
         public static event EventHandler AppNameChanged;
-        public static string AppName
-        {
-            get => appName;
-            set
-            {
-                appName = value;
-                AppNameChanged?.Invoke(null, EventArgs.Empty);
-            }
-        }
+        public static string AppName { get; set; }
 
         static App()
         {

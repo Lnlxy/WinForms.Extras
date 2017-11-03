@@ -1,8 +1,8 @@
-﻿namespace System.Windows.Forms
-{
-    using System.ComponentModel;
-    using System.Linq.Expressions;
+﻿using System.ComponentModel;
+using System.Linq.Expressions;
 
+namespace System.Windows.Forms
+{
     /// <summary>
     /// 提供对组件或控件的命令注册。
     /// </summary>

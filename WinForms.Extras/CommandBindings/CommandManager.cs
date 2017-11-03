@@ -1,9 +1,9 @@
-﻿namespace System.Windows.Forms
-{
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq.Expressions;
 
+namespace System.Windows.Forms
+{
     /// <summary>
     /// 命令管理器。
     /// </summary>

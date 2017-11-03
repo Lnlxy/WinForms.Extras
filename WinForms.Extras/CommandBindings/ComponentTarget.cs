@@ -1,6 +1,7 @@
-﻿namespace System.Windows.Forms
+﻿using System.ComponentModel;
+
+namespace System.Windows.Forms
 {
-    using System.ComponentModel;
 
     /// <summary>
     /// 命令目标组件。

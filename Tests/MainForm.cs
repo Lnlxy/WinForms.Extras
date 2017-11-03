@@ -1,7 +1,6 @@
 ﻿namespace Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Drawing;
     using System.Globalization;
@@ -51,52 +50,42 @@
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            textBox1.Binding(i => i.Text, this, i => i.Text)
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
-                .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
-            lblTotal.MultiDataBinding(i => i.Text, () => new List<DataSourceMemeber> {
-                DataSourceMemeber.Create(this, x => x.R),
-                DataSourceMemeber.Create(this, x => x.G),
-                DataSourceMemeber.Create(this, x => x.B),
-            }, new MultiValueToStringConverter())
+            //textBox1.Binding(i => i.Text, this, i => i.Text)
+            //    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
+            //    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
+            var mdbi = new MultiDataBoundItem(this.CreateDataBoundItem(x => x.R),
+                this.CreateDataBoundItem(x => x.G),
+                this.CreateDataBoundItem(x => x.B));
+            lblTotal.Binding(i => i.Text, mdbi, new MultiValueToStringConverter())
                 .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             //txtAppName.Binding(i => i.Text, lblTotal, i => i.Text).SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
 
             nudR.Binding(i => i.Value, this, i => i.R)
-                .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
+                    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
+                    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             nudG.Binding(i => i.Value, this, i => i.G)
-                .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
+                    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
+                    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             nudB.Binding(i => i.Value, this, i => i.B)
-                .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
+                    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
+                    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
 
-            lblColor.MultiDataBinding(i => i.BackColor, () => new List<DataSourceMemeber> {
-                DataSourceMemeber.Create(this, x => x.R),
-                DataSourceMemeber.Create(this, x => x.G),
-                DataSourceMemeber.Create(this, x => x.B),
-            }, new RGBToColorConverter())
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
-                .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
-            lblColor.DataBinding(i => i.Text, lblColor, i => i.BackColor, new ColorToStringConverter())
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
+            lblColor.Binding(i => i.BackColor, mdbi, new RGBToColorConverter())
+                    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
+                    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
+            lblColor.Binding(i => i.Text, lblColor, i => i.BackColor, new ColorToStringConverter())
+                    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
 
-            lblR.DataBinding(i => i.Text, nudR, i => i.Value, new ObjectToStringConverter())
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            lblG.DataBinding(i => i.Text, nudG, i => i.Value, new ObjectToStringConverter())
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            lblB.DataBinding(i => i.Text, nudB, i => i.Value, new ObjectToStringConverter())
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
+            lblR.Binding(i => i.Text, nudR, i => i.Value, new ObjectToStringConverter())
+                    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
+            lblG.Binding(i => i.Text, nudG, i => i.Value, new ObjectToStringConverter())
+                    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
+            lblB.Binding(i => i.Text, nudB, i => i.Value, new ObjectToStringConverter())
+                    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             btnAddR.Command(this, i => i.R, i => R = i + 1, i => i >= 0 & i < 255);
             btnAddG.Command(this, i => i.G, i => G = i + 1, i => i >= 0 & i < 255);
             btnAddB.Command(this, i => i.B, i => B = i + 1, i => i >= 0 & i < 255);
-            this.Binding(i => i.Text, new DataSourceMemeber(typeof(App), "AppName"), "Value");
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            App.AppName = textBox1.Text;
+            this.Binding(i => i.Text, typeof(App), "AppName");
         }
 
         private void lblColor_Click(object sender, EventArgs e)
@@ -113,6 +102,11 @@
 
         private void OnACHanged(object sender, EventArgs e)
         {
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            App.AppName = textBox1.Text;
         }
     }
 

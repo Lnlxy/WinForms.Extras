@@ -42,24 +42,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bindings\BindingChain.cs" />
-    <Compile Include="Bindings\DataBinding.cs" />
-    <Compile Include="Bindings\DataSourceMemeber.cs" />
-    <Compile Include="Bindings\MultiDataBinding.cs" />
-    <Compile Include="Bindings\ControlExtensions.cs" />
-    <Compile Include="Bindings\IMultiValueConverter.cs" />
-    <Compile Include="Bindings\IValueConverter.cs" />
-    <Compile Include="Commands\CommandBinding.cs" />
-    <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Commands\CommandParameter.cs" />
-    <Compile Include="Commands\CommandSource.cs" />
-    <Compile Include="Commands\ComponentTarget.cs" />
-    <Compile Include="Commands\ComponentCommandExtensions.cs" />
-    <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Internals\PropertyDescriptor.cs" />
-    <Compile Include="Internals\MemberDescriptor.cs" />
-    <Compile Include="Internals\SourceTypeDescriptor.cs" />
+    <Compile Include="Base\DataBoundExtensions.cs" />
+    <Compile Include="Base\DataBoundItem.cs" />
+    <Compile Include="Base\IDataBoundItem.cs" />
+    <Compile Include="Base\MultiDataBoundItem.cs" />
+    <Compile Include="Base\StaticTypeDataBoundItem.cs" />
+    <Compile Include="DataBindings\BindingChain.cs" />
+    <Compile Include="DataBindings\Internals\Bindings\DataBinding.cs" />
+    <Compile Include="DataBindings\Internals\Bindings\MultiDataBinding.cs" />
+    <Compile Include="DataBindings\ControlBindingExtensions.cs" />
+    <Compile Include="Base\IMultiValueConverter.cs" />
+    <Compile Include="Base\IValueConverter.cs" />
+    <Compile Include="CommandBindings\CommandBinding.cs" />
+    <Compile Include="CommandBindings\CommandManager.cs" />
+    <Compile Include="CommandBindings\CommandParameter.cs" />
+    <Compile Include="CommandBindings\CommandSource.cs" />
+    <Compile Include="CommandBindings\ComponentTarget.cs" />
+    <Compile Include="CommandBindings\ComponentCommandExtensions.cs" />
+    <Compile Include="CommandBindings\ICommand.cs" />
+    <Compile Include="CommandBindings\RelayCommand.cs" />
+    <Compile Include="Base\Internals\SourcePropertyDescriptor.cs" />
+    <Compile Include="Base\Internals\SourceMemberDescriptor.cs" />
+    <Compile Include="Base\Internals\SourceTypeDescriptor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

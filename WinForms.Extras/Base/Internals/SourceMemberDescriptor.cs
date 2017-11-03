@@ -1,8 +1,8 @@
 ﻿namespace System.Windows.Forms.Internals
 {
-    abstract class MemberDescriptor
+    abstract class SourceMemberDescriptor
     {
-        public MemberDescriptor(string name)
+        public SourceMemberDescriptor(string name)
         {
             Name = name;
         }
