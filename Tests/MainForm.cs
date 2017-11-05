@@ -49,13 +49,13 @@
 
         protected override void OnLoad(EventArgs e)
         {
-            this.Property(i => i.Text).Binding(App.AppName);
+            this.Property(i=>i.R).Binding(254);
             base.OnLoad(e);
             //textBox1.Binding(i => i.Text, this, i => i.Text)
             //    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
             //    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
             var multiValues = this.CreateMultiBindableValue(i => i.R, i => i.G, i => i.B);
-            lblTotal.Property(i => i.Text).Binding(multiValues, new MultiValueToStringConverter())
+            lblTotal.Property().Binding(multiValues, new MultiValueToStringConverter())
                 .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             //txtAppName.Binding(i => i.Text, lblTotal, i => i.Text).SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
 

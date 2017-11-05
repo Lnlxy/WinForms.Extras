@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
-
+using System.ComponentModel;
+using System.Linq;
 namespace System.Windows.Forms
 {
     public static class BindableComponetExtensions
@@ -13,6 +14,25 @@ namespace System.Windows.Forms
         public static BindableComponentProperty Property(this IBindableComponent component, string propertyName)
         {
             return new BindableComponentProperty(component, propertyName);
+        }
+
+        /// <summary>
+        /// 创建由 <see cref="DefaultBindingPropertyAttribute"/>标记绑定的默认属性。
+        /// </summary>
+        /// <param name="component">此组件实例。</param>
+        /// <returns>返回 <see cref="BindableComponentProperty"/> 新实例。</returns>
+        public static BindableComponentProperty Property(this IBindableComponent component)
+        {
+            var componentType = component.GetType();
+            var attributeType = typeof(DefaultBindingPropertyAttribute);
+            if (!componentType.IsDefined(attributeType, true))
+            {
+                throw new ArgumentException();
+            }
+            var attribute = componentType.GetCustomAttributes(attributeType, true)
+                .OfType<DefaultBindingPropertyAttribute>()
+                .First();
+            return new BindableComponentProperty(component, attribute.Name);
         }
 
         /// <summary>
