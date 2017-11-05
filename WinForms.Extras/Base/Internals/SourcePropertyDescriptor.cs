@@ -29,7 +29,7 @@ namespace System.Windows.Forms.Internals
             {
                 var eventName = $"{_property.Name}Changed";
                 var evnt = _property.ReflectedType.GetEvent(eventName);
-                if (evnt?.GetType().IsAssignableFrom(eventHandler.GetType()) ?? false)
+                if (evnt?.EventHandlerType.IsAssignableFrom(eventHandler.GetType()) ?? false)
                 {
                     evnt.AddEventHandler(source, eventHandler);
                 }

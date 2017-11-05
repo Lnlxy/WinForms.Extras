@@ -46,10 +46,12 @@
     <Compile Include="Base\BindableValue.cs" />
     <Compile Include="Base\IBindableValue.cs" />
     <Compile Include="Base\MultiBindableValue.cs" />
+    <Compile Include="Base\ObjectValue.cs" />
+    <Compile Include="DataBindings\BindableComponetExtensions.cs" />
     <Compile Include="DataBindings\BindingChain.cs" />
+    <Compile Include="DataBindings\BindableComponentProperty.cs" />
     <Compile Include="DataBindings\Internals\Bindings\DataBinding.cs" />
     <Compile Include="DataBindings\Internals\Bindings\MultiDataBinding.cs" />
-    <Compile Include="DataBindings\BindingExtensions.cs" />
     <Compile Include="Base\IMultiValueConverter.cs" />
     <Compile Include="Base\IValueConverter.cs" />
     <Compile Include="CommandBindings\CommandBinding.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Base\Internals\SourcePropertyDescriptor.cs" />
     <Compile Include="Base\Internals\SourceMemberDescriptor.cs" />
     <Compile Include="Base\Internals\SourceTypeDescriptor.cs" />
+    <Compile Include="Base\IObjectValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

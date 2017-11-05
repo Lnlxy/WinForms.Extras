@@ -49,41 +49,60 @@
 
         protected override void OnLoad(EventArgs e)
         {
+            this.Property(i => i.Text).Binding(App.AppName);
             base.OnLoad(e);
             //textBox1.Binding(i => i.Text, this, i => i.Text)
             //    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
             //    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
-            var mdbi = this.CreateMultiBindableValue(i => i.R, i => i.G, i => i.B);
-            lblTotal.Binding(i => i.Text, mdbi, new MultiValueToStringConverter())
+            var multiValues = this.CreateMultiBindableValue(i => i.R, i => i.G, i => i.B);
+            lblTotal.Property(i => i.Text).Binding(multiValues, new MultiValueToStringConverter())
                 .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             //txtAppName.Binding(i => i.Text, lblTotal, i => i.Text).SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
 
-            nudR.Binding(i => i.Value, this, i => i.R)
+            nudR.Property(i => i.Value).Binding(this, i => i.R)
                     .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            nudG.Binding(i => i.Value, this, i => i.G)
+            nudG.Property(i => i.Value).Binding(this, i => i.G)
                     .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            nudB.Binding(i => i.Value, this, i => i.B)
+            nudB.Property(i => i.Value).Binding(this, i => i.B)
                     .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
 
-            lblColor.Binding(i => i.BackColor, mdbi, new RGBToColorConverter())
+            lblColor.Property(i => i.BackColor).Binding(multiValues, new RGBToColorConverter())
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
                     .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
-            lblColor.Binding(i => i.Text, lblColor, i => i.BackColor, new ColorToStringConverter())
+            lblColor.Property(i => i.Text).Binding(lblColor, i => i.BackColor, new ColorToStringConverter())
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-
-            lblR.Binding(i => i.Text, nudR, i => i.Value, new ObjectToStringConverter())
+            lblR.Property(i => i.Text).Binding(nudR, i => i.Value, new ObjectToStringConverter())
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            lblG.Binding(i => i.Text, nudG, i => i.Value, new ObjectToStringConverter())
+            lblG.Property(i => i.Text).Binding(nudG, i => i.Value, new ObjectToStringConverter())
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            lblB.Binding(i => i.Text, nudB, i => i.Value, new ObjectToStringConverter())
+            lblB.Property(i => i.Text).Binding(nudB, i => i.Value, new ObjectToStringConverter())
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             btnAddR.Command(this, i => i.R, i => R = i + 1, i => i >= 0 & i < 255);
             btnAddG.Command(this, i => i.G, i => G = i + 1, i => i >= 0 & i < 255);
             btnAddB.Command(this, i => i.B, i => B = i + 1, i => i >= 0 & i < 255);
-            this.Binding(i => i.Text, typeof(App), "AppName");
+
+            btnAll.Command(new RelayCommand(i =>
+            {
+                if (R < 255)
+                {
+                    R++;
+                }
+                if (G < 255)
+                {
+                    G++;
+                }
+                if (B < 255)
+                {
+                    B++;
+                }
+            }, i =>
+            {
+                var values = (object[])i;
+                return (int)values[0] < 255 || (int)values[1] < 255 || (int)values[2] < 255;
+            }), multiValues);
         }
 
         private void lblColor_Click(object sender, EventArgs e)

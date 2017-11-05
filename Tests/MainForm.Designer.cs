@@ -46,6 +46,7 @@
             this.txtAppName = new System.Windows.Forms.TextBox();
             this.btnAddB = new System.Windows.Forms.Button();
             this.btnAddG = new System.Windows.Forms.Button();
+            this.btnAll = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudG)).BeginInit();
@@ -205,6 +206,7 @@
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.txtAppName);
             this.groupBox2.Controls.Add(this.btnAddB);
+            this.groupBox2.Controls.Add(this.btnAll);
             this.groupBox2.Controls.Add(this.btnAddG);
             this.groupBox2.Controls.Add(this.btnAddR);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -248,6 +250,15 @@
             this.btnAddG.Text = "Add Green";
             this.btnAddG.UseVisualStyleBackColor = true;
             // 
+            // btnAll
+            // 
+            this.btnAll.Location = new System.Drawing.Point(143, 80);
+            this.btnAll.Name = "btnAll";
+            this.btnAll.Size = new System.Drawing.Size(75, 23);
+            this.btnAll.TabIndex = 1;
+            this.btnAll.Text = "Add All";
+            this.btnAll.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -289,6 +300,7 @@
         private System.Windows.Forms.Button btnAddB;
         private System.Windows.Forms.Button btnAddG;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnAll;
     }
 }
 
