@@ -25,8 +25,14 @@ namespace System.Windows.Forms
         /// </summary>
         public IBindableComponent Component { get; private set; }
 
+        /// <summary>
+        /// 获取或设置一个值，该值表示控件属性更新方式。
+        /// </summary>
         public ControlUpdateMode ControlUpdateMode { get; set; }
 
+        /// <summary>
+        /// 获取或设置一个值，该值表示数据源更新方式。
+        /// </summary>
         public DataSourceUpdateMode DataSourceUpdateMode { get; set; }
 
         /// <summary>
@@ -41,7 +47,7 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public IBindableProperty Binding(IObjectValue value)
+        public IBindableProperty Binding(IValueObject value)
         {
             var binding = Component.DataBindings.Add(PropertyName, value, "Value");
             binding.ControlUpdateMode = ControlUpdateMode;
@@ -59,7 +65,7 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public IBindableProperty Binding(IObjectValue value, IValueConverter converter, object convertParameter = null, CultureInfo culture = null)
+        public IBindableProperty Binding(IValueObject value, IValueConverter converter, object convertParameter = null, CultureInfo culture = null)
         {
             return Binding(value, "Value", converter, convertParameter, culture);
         }
@@ -126,9 +132,9 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public IBindableProperty Binding(ObjectValue value)
+        public IBindableProperty Binding(ValueObject value)
         {
-            return Binding((IObjectValue)value);
+            return Binding((IValueObject)value);
         }
 
         /// <summary>

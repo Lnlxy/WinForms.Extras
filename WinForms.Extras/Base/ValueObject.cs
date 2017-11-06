@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace System.Windows.Forms
 {
-    public sealed class ObjectValue : IObjectValue, IConvertible, IComparable<ObjectValue>, IComparable, IComparer, IComparer<ObjectValue>
+    public sealed class ValueObject : IValueObject, IConvertible, IComparable<ValueObject>, IComparable, IComparer, IComparer<ValueObject>
     {
         private volatile object _value;
 
-        public ObjectValue()
+        public ValueObject()
         {
         }
 
-        public ObjectValue(object value)
+        public ValueObject(object value)
         {
             _value = value;
         }
@@ -38,7 +38,7 @@ namespace System.Windows.Forms
             return Comparer.Default.Compare(x, y);
         }
 
-        public int Compare(ObjectValue x, ObjectValue y)
+        public int Compare(ValueObject x, ValueObject y)
         {
             return x?.CompareTo(y) ?? 0;
         }
@@ -48,7 +48,7 @@ namespace System.Windows.Forms
             return Comparer.Default.Compare(_value, obj);
         }
 
-        public int CompareTo(ObjectValue other)
+        public int CompareTo(ValueObject other)
         {
             return Comparer.Default.Compare(_value, other?._value);
         }
@@ -149,61 +149,61 @@ namespace System.Windows.Forms
 
 
 
-        public static implicit operator ObjectValue(string value)
+        public static implicit operator ValueObject(string value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(short value)
+        public static implicit operator ValueObject(short value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(int value)
+        public static implicit operator ValueObject(int value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(long value)
+        public static implicit operator ValueObject(long value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(ushort value)
+        public static implicit operator ValueObject(ushort value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(uint value)
+        public static implicit operator ValueObject(uint value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(ulong value)
+        public static implicit operator ValueObject(ulong value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(float value)
+        public static implicit operator ValueObject(float value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(double value)
+        public static implicit operator ValueObject(double value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(char value)
+        public static implicit operator ValueObject(char value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(byte value)
+        public static implicit operator ValueObject(byte value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(sbyte value)
+        public static implicit operator ValueObject(sbyte value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(decimal value)
+        public static implicit operator ValueObject(decimal value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
-        public static implicit operator ObjectValue(bool value)
+        public static implicit operator ValueObject(bool value)
         {
-            return new ObjectValue(value);
+            return new ValueObject(value);
         }
     }
 }

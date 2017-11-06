@@ -47,7 +47,8 @@
     <Compile Include="Base\Bindable\IBindableValue.cs" />
     <Compile Include="Base\Bindable\MultiBindableValue.cs" />
     <Compile Include="Base\Converters\BooleanToCheckedStateConverter.cs" />
-    <Compile Include="Base\ObjectValue.cs" />
+    <Compile Include="Base\Internals\SourceEventDescriptor.cs" />
+    <Compile Include="Base\ValueObject.cs" />
     <Compile Include="DataBindings\BindablePropertyExtensions.cs" />
     <Compile Include="DataBindings\BindingChain.cs" />
     <Compile Include="DataBindings\Internals\BindableProperties\BindableComponentProperty.cs" />
@@ -58,16 +59,14 @@
     <Compile Include="Base\Converters\IMultiValueConverter.cs" />
     <Compile Include="Base\Converters\IValueConverter.cs" />
     <Compile Include="CommandBindings\CommandBinding.cs" />
-    <Compile Include="CommandBindings\CommandManager.cs" />
-    <Compile Include="CommandBindings\CommandSource.cs" />
-    <Compile Include="CommandBindings\ComponentTarget.cs" />
+    <Compile Include="CommandBindings\CommandTarget.cs" />
     <Compile Include="CommandBindings\ComponentCommandExtensions.cs" />
     <Compile Include="CommandBindings\ICommand.cs" />
     <Compile Include="CommandBindings\RelayCommand.cs" />
     <Compile Include="Base\Internals\SourcePropertyDescriptor.cs" />
     <Compile Include="Base\Internals\SourceMemberDescriptor.cs" />
     <Compile Include="Base\Internals\SourceTypeDescriptor.cs" />
-    <Compile Include="Base\IObjectValue.cs" />
+    <Compile Include="Base\IValueObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

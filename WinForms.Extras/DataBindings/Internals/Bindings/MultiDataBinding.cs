@@ -40,7 +40,7 @@ namespace System.Windows.Forms
         /// <param name="culture">转换区域。</param>
         public MultiDataBinding(string propertyName, MultiBindableValue item, IMultiValueConverter converter, object convertParameter, CultureInfo culture) : base(propertyName, item, "Value")
         {
-            _types = item.ItemTypes;
+            _types = item.ValueTypes;
             Converter = converter;
             ConvertParameter = convertParameter;
             Culture = culture;

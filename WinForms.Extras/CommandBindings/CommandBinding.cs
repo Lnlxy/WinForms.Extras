@@ -3,41 +3,34 @@
     /// <summary>
     /// 命令绑定。
     /// </summary>
-    public sealed class CommandBinding
+    class CommandBinding
     {
-        internal CommandBinding(CommandSource source, ComponentTarget target)
+        private readonly ICommand _command;
+        private readonly CommandTarget _target;
+        private readonly IValueObject _commandParameter;
+        internal CommandBinding(ICommand command, CommandTarget target) : this(command, target, null)
         {
-            Id = Guid.NewGuid();
-            Source = source;
-            Source.RequerySuggested += CommandSource_RequerySuggested;
-            Target = target;
-            target.DefaultEventHandled += Target_DefaultEventHandled;
-            Target.Enabled = Source.CanExecuteCommand();
+        }
+        internal CommandBinding(ICommand command, CommandTarget target, IValueObject commandParameter)
+        {
+            _target = target;
+            _command = command;
+            _commandParameter = commandParameter;
+            target.DoEvent(OnTargetEventHandle);
+            if (commandParameter != null)
+            {
+                commandParameter.ValueChanged += OnVlaueChanged;
+            }
         }
 
-        /// <summary>
-        /// 获取一个值，该值表示此绑定信息唯一标记。
-        /// </summary>
-        public Guid Id { get; private set; }
-
-        /// <summary>
-        /// 获取一个值，该值表示命令源。
-        /// </summary>
-        public CommandSource Source { get; private set; }
-
-        /// <summary>
-        /// 获取一个值，该值表示命令目标。
-        /// </summary>
-        public ComponentTarget Target { get; private set; }
-
-        private void CommandSource_RequerySuggested(object sender, EventArgs e)
+        private void OnTargetEventHandle(object sender, EventArgs e)
         {
-            Target.Enabled = Source.CanExecuteCommand();
-        }
+            _command.Execute(_commandParameter?.Value);
+        } 
 
-        private void Target_DefaultEventHandled(object sender, EventArgs e)
+        private void OnVlaueChanged(object sender, EventArgs e)
         {
-            Source.ExecuteCommand();
+            _target.UpdateState(_command.CanExecute(_commandParameter?.Value));
         }
     }
 }

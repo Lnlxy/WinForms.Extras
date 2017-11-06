@@ -12,13 +12,13 @@ namespace System.Windows.Forms
         /// 添加命令。
         /// </summary>
         /// <param name="component">目标组件</param>
-        /// <param name="commandSource">命令源。</param>
+        /// <param name="command">命令。</param>
+        /// <param name="commandParameter">命令执行参数。</param>
         /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
-        public static CommandBinding Command(this Component component, CommandSource commandSource)
+        public static void Command(this Component component, ICommand command)
         {
-            return CommandManager.Add(component, commandSource);
+            new CommandBinding(command, new CommandTarget(component));
         }
-
         /// <summary>
         /// 添加命令。
         /// </summary>
@@ -26,22 +26,9 @@ namespace System.Windows.Forms
         /// <param name="command">命令。</param>
         /// <param name="commandParameter">命令执行参数。</param>
         /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
-        public static CommandBinding Command(this Component component, ICommand command, IBindableValue commandParameter)
+        public static void Command(this Component component, ICommand command, IValueObject commandParameter)
         {
-            return Command(component, new CommandSource(command, commandParameter));
-        }
-
-        /// <summary>
-        /// 添加命令。
-        /// </summary>
-        /// <param name="component">目标组件</param>
-        /// <param name="command">命令。</param>
-        /// <param name="source">数据源。</param>
-        /// <param name="parameter">参数。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
-        public static CommandBinding Command(this Component component, ICommand command, Object source, string parameter)
-        {
-            return Command(component, command, new BindableValue(source, parameter));
+            new CommandBinding(command, new CommandTarget(component), commandParameter);
         }
 
         /// <summary>
@@ -52,21 +39,16 @@ namespace System.Windows.Forms
         /// <param name="component">目标组件</param>
         /// <param name="command">命令。</param>
         /// <param name="source">数据源。</param>
-        /// <param name="parameterExpression">参数表达式。</param>
+        /// <param name="expression">参数表达式。</param>
         /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
-        public static CommandBinding Command<TSource, TParameter>(this Component component, ICommand command, TSource source, Expression<Func<TSource, TParameter>> parameterExpression)
+        public static void Command<TSource, TParameter>(this Component component, ICommand command, TSource source, Expression<Func<TSource, TParameter>> expression)
         {
-            var member = parameterExpression.Body as MemberExpression;
+            var member = expression.Body as MemberExpression;
             if (member.Member.MemberType != Reflection.MemberTypes.Property)
             {
                 throw new InvalidOperationException($"{member.Member.Name} is not a property.");
             }
-            return Command(component, command, source, member.Member.Name);
-        }
-
-        public static void Command<TSource, TParameter>(this Component component, TSource source, Expression<Func<TSource, TParameter>> parameterExpression, Action<TParameter> execute, Func<TParameter, bool> canexecute)
-        {
-            Command(component, new RelayCommand<TParameter>(execute, canexecute), source, parameterExpression);
+            Command(component, command, source.CreateBindableValue(expression));
         }
     }
 }

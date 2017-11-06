@@ -49,7 +49,6 @@
 
         protected override void OnLoad(EventArgs e)
         {
-
             base.OnLoad(e);
             item1ToolStripMenuItem.Property(i => i.Text).Binding(txtMenuText, i => i.Text)
                 .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
@@ -79,9 +78,9 @@
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             lblB.Property(i => i.Text).Binding(nudB, i => i.Value, new ObjectToStringConverter())
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            btnAddR.Command(this, i => i.R, i => R = i + 1, i => i >= 0 & i < 255);
-            btnAddG.Command(this, i => i.G, i => G = i + 1, i => i >= 0 & i < 255);
-            btnAddB.Command(this, i => i.B, i => B = i + 1, i => i >= 0 & i < 255);
+            btnAddR.Command(new RelayCommand<int>(i => R = i + 1, i => i >= 0 & i < 255), this, i => i.R);
+            btnAddG.Command(new RelayCommand<int>(i => G = i + 1, i => i >= 0 & i < 255), this, i => i.G);
+            btnAddB.Command(new RelayCommand<int>(i => B = i + 1, i => i >= 0 & i < 255), this, i => i.B);
 
             btnAll.Command(new RelayCommand(i =>
             {

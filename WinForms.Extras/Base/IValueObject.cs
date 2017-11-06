@@ -1,6 +1,6 @@
 ﻿namespace System.Windows.Forms
 {
-    public interface IObjectValue
+    public interface IValueObject
     {
         /// <summary>
         /// 当值改变时，发生。

@@ -29,7 +29,7 @@ namespace System.Windows.Forms
 
         public event EventHandler ValueChanged;
 
-        public Type[] ItemTypes { get => _items.Select(i => i.Type).ToArray(); }
+        public Type[] ValueTypes { get => _items.Select(i => i.Type).ToArray(); }
 
         public Type Type => typeof(object[]);
 
