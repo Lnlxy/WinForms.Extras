@@ -10,6 +10,6 @@ namespace System.Windows.Forms
         /// <summary>
         /// 获取一个值，该值表示值类型。
         /// </summary>
-        Type ValueType { get; }
+        Type Type { get; }
     }
 }

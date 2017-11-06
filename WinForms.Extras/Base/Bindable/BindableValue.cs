@@ -29,6 +29,8 @@ namespace System.Windows.Forms
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event EventHandler ValueChanged;
+
         /// <summary>
         /// 获取一个值，该值表示数据源类型。
         /// </summary>
@@ -39,12 +41,12 @@ namespace System.Windows.Forms
         /// </summary>
         public string PropertyName { get; private set; }
 
-        public object Value { get => _property.GetValue(_dataSource); set => _property.SetValue(_dataSource, value); }
-
         /// <summary>
         /// 获取一个值，该值表示属性类型。
         /// </summary>
-        public Type ValueType => _property.PropertyType;
+        public Type Type => _property.PropertyType;
+
+        public object Value { get => _property.GetValue(_dataSource); set => _property.SetValue(_dataSource, value); }
 
         public override string ToString()
         {
@@ -53,6 +55,7 @@ namespace System.Windows.Forms
 
         private void OnValueChanged(object sender, EventArgs e)
         {
+            ValueChanged?.Invoke(this, EventArgs.Empty);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
         }
     }

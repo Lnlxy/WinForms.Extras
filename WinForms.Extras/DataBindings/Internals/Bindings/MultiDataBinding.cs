@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 
 namespace System.Windows.Forms
 {
@@ -10,6 +8,7 @@ namespace System.Windows.Forms
     class MultiDataBinding : Binding
     {
         private readonly Type[] _types = null;
+
         /// <summary>
         /// 初始化 <see cref="MultiDataBinding"/> 新实例。
         /// </summary>
@@ -85,7 +84,6 @@ namespace System.Windows.Forms
         /// 获取一个值，该值表示转换区域信息。
         /// </summary>
         public CultureInfo Culture { get; private set; }
-
 
         protected override void OnFormat(ConvertEventArgs cevent)
         {

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -28,11 +27,13 @@ namespace System.Windows.Forms
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Type[] ItemTypes { get => _items.Select(i => i.ValueType).ToArray(); }
+        public event EventHandler ValueChanged;
+
+        public Type[] ItemTypes { get => _items.Select(i => i.Type).ToArray(); }
+
+        public Type Type => typeof(object[]);
 
         public object Value { get => GetValue(); set => SetValue(value); }
-
-        public Type ValueType => typeof(object[]);
 
         public object GetValue()
         {
@@ -50,6 +51,7 @@ namespace System.Windows.Forms
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            ValueChanged?.Invoke(this, EventArgs.Empty);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
         }
     }

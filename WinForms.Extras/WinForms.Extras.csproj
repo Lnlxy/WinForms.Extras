@@ -42,18 +42,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\BindableExtensions.cs" />
-    <Compile Include="Base\BindableValue.cs" />
-    <Compile Include="Base\IBindableValue.cs" />
-    <Compile Include="Base\MultiBindableValue.cs" />
+    <Compile Include="Base\Bindable\BindableExtensions.cs" />
+    <Compile Include="Base\Bindable\BindableValue.cs" />
+    <Compile Include="Base\Bindable\IBindableValue.cs" />
+    <Compile Include="Base\Bindable\MultiBindableValue.cs" />
+    <Compile Include="Base\Converters\BooleanToCheckedStateConverter.cs" />
     <Compile Include="Base\ObjectValue.cs" />
-    <Compile Include="DataBindings\BindableComponetExtensions.cs" />
+    <Compile Include="DataBindings\BindablePropertyExtensions.cs" />
     <Compile Include="DataBindings\BindingChain.cs" />
-    <Compile Include="DataBindings\BindableComponentProperty.cs" />
+    <Compile Include="DataBindings\Internals\BindableProperties\BindableComponentProperty.cs" />
+    <Compile Include="DataBindings\Internals\BindableProperties\ComponentProperty.cs" />
+    <Compile Include="DataBindings\IBindableProperty.cs" />
     <Compile Include="DataBindings\Internals\Bindings\DataBinding.cs" />
     <Compile Include="DataBindings\Internals\Bindings\MultiDataBinding.cs" />
-    <Compile Include="Base\IMultiValueConverter.cs" />
-    <Compile Include="Base\IValueConverter.cs" />
+    <Compile Include="Base\Converters\IMultiValueConverter.cs" />
+    <Compile Include="Base\Converters\IValueConverter.cs" />
     <Compile Include="CommandBindings\CommandBinding.cs" />
     <Compile Include="CommandBindings\CommandManager.cs" />
     <Compile Include="CommandBindings\CommandSource.cs" />

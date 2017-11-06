@@ -49,16 +49,15 @@
 
         protected override void OnLoad(EventArgs e)
         {
-            this.Property(i=>i.R).Binding(254);
-            base.OnLoad(e);
-            //textBox1.Binding(i => i.Text, this, i => i.Text)
-            //    .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged)
-            //    .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
-            var multiValues = this.CreateMultiBindableValue(i => i.R, i => i.G, i => i.B);
-            lblTotal.Property().Binding(multiValues, new MultiValueToStringConverter())
-                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
-            //txtAppName.Binding(i => i.Text, lblTotal, i => i.Text).SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
 
+            base.OnLoad(e);
+            item1ToolStripMenuItem.Property(i => i.Text).Binding(txtMenuText, i => i.Text)
+                .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
+            this.Property(i => i.R).Binding(254);
+            var multiValues = this.CreateMultiBindableValue(i => i.R, i => i.G, i => i.B);
+            lblTotal.Property()
+                .Binding(multiValues, new MultiValueToStringConverter())
+                .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
             nudR.Property(i => i.Value).Binding(this, i => i.R)
                     .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged)
                     .SetControlUpdateMode(ControlUpdateMode.OnPropertyChanged);
@@ -123,7 +122,7 @@
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            App.AppName = textBox1.Text;
+            App.AppName = txtMenuText.Text;
         }
     }
 

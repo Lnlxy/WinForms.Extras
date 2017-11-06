@@ -5,16 +5,33 @@ namespace System.Windows.Forms
 {
     public sealed class ObjectValue : IObjectValue, IConvertible, IComparable<ObjectValue>, IComparable, IComparer, IComparer<ObjectValue>
     {
+        private volatile object _value;
+
         public ObjectValue()
         {
         }
 
         public ObjectValue(object value)
         {
-            Value = value;
+            _value = value;
         }
 
-        public object Value { get; set; }
+        public event EventHandler ValueChanged;
+
+        public Type Type => _value?.GetType() ?? null;
+
+        public object Value
+        {
+            get => _value;
+            set
+            {
+                if (!Equals(_value, _value))
+                {
+                    _value = value;
+                    ValueChanged?.Invoke(this, EventArgs.Empty);
+                }
+            }
+        }
 
         public int Compare(object x, object y)
         {
@@ -26,105 +43,109 @@ namespace System.Windows.Forms
             return x?.CompareTo(y) ?? 0;
         }
 
-        public int CompareTo(ObjectValue other)
-        {
-            return Comparer.Default.Compare(Value, other?.Value);
-        }
-
         public int CompareTo(object obj)
         {
-            return Comparer.Default.Compare(Value, obj);
+            return Comparer.Default.Compare(_value, obj);
+        }
+
+        public int CompareTo(ObjectValue other)
+        {
+            return Comparer.Default.Compare(_value, other?._value);
         }
 
         public TypeCode GetTypeCode()
         {
-            return Type.GetTypeCode(Value?.GetType() ?? typeof(Nullable));
+            return Type.GetTypeCode(_value?.GetType() ?? typeof(Nullable));
         }
 
         public bool ToBoolean(IFormatProvider provider)
         {
-            return Convert.ToBoolean(Value, provider);
+            return Convert.ToBoolean(_value, provider);
         }
 
         public byte ToByte(IFormatProvider provider)
         {
-            return Convert.ToByte(Value, provider);
+            return Convert.ToByte(_value, provider);
         }
 
         public char ToChar(IFormatProvider provider)
         {
-            return Convert.ToChar(Value, provider);
+            return Convert.ToChar(_value, provider);
         }
 
         public DateTime ToDateTime(IFormatProvider provider)
         {
-            return Convert.ToDateTime(Value, provider);
+            return Convert.ToDateTime(_value, provider);
         }
 
         public decimal ToDecimal(IFormatProvider provider)
         {
-            return Convert.ToDecimal(Value, provider);
+            return Convert.ToDecimal(_value, provider);
         }
 
         public double ToDouble(IFormatProvider provider)
         {
-            return Convert.ToDouble(Value, provider);
+            return Convert.ToDouble(_value, provider);
         }
 
         public short ToInt16(IFormatProvider provider)
         {
-            return Convert.ToInt16(Value, provider);
+            return Convert.ToInt16(_value, provider);
         }
 
         public int ToInt32(IFormatProvider provider)
         {
-            return Convert.ToInt32(Value, provider);
+            return Convert.ToInt32(_value, provider);
         }
 
         public long ToInt64(IFormatProvider provider)
         {
-            return Convert.ToInt64(Value, provider);
+            return Convert.ToInt64(_value, provider);
         }
 
         public sbyte ToSByte(IFormatProvider provider)
         {
-            return Convert.ToSByte(Value, provider);
+            return Convert.ToSByte(_value, provider);
         }
 
         public float ToSingle(IFormatProvider provider)
         {
-            return Convert.ToSingle(Value, provider);
+            return Convert.ToSingle(_value, provider);
         }
 
         public override string ToString()
         {
-            return $"{{{Value.ToString()}}}";
+            return $"{{{_value.ToString()}}}";
         }
 
         public string ToString(IFormatProvider provider)
         {
-            return Convert.ToString(Value, provider);
+            return Convert.ToString(_value, provider);
         }
 
         public object ToType(Type conversionType, IFormatProvider provider)
         {
-            return Convert.ChangeType(Value, conversionType, provider);
+            return Convert.ChangeType(_value, conversionType, provider);
         }
 
         public ushort ToUInt16(IFormatProvider provider)
         {
-            return Convert.ToUInt16(Value, provider);
+            return Convert.ToUInt16(_value, provider);
         }
 
         public uint ToUInt32(IFormatProvider provider)
         {
-            return Convert.ToUInt32(Value, provider);
+            return Convert.ToUInt32(_value, provider);
         }
 
         public ulong ToUInt64(IFormatProvider provider)
         {
-            return Convert.ToUInt64(Value, provider);
+            return Convert.ToUInt64(_value, provider);
         }
+
+
+
+
 
 
 

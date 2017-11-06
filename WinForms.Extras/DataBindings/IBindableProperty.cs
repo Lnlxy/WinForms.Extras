@@ -1,34 +1,18 @@
 ﻿using System.Globalization;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace System.Windows.Forms
 {
     /// <summary>
-    /// 定义可绑定组件的绑定属性信息。
+    /// 定义绑定方法。
     /// </summary>
-    public class BindableComponentProperty
+    public interface IBindableProperty
     {
-        /// <summary>
-        /// 初始化 <see cref="BindableComponentProperty"/> 新实例。
-        /// </summary>
-        /// <param name="component">组件。</param>
-        /// <param name="propertyName">属性。</param>
-        public BindableComponentProperty(IBindableComponent component, string propertyName)
-        {
-            Component = component;
-            PropertyName = propertyName;
-        }
+        ControlUpdateMode ControlUpdateMode { get; set; }
 
-        /// <summary>
-        /// 获取一个值，该值表示组件信息。
-        /// </summary>
-        public IBindableComponent Component { get; private set; }
+        DataSourceUpdateMode DataSourceUpdateMode { get; set; }
 
-        /// <summary>
-        /// 获取一个值，该值表示属性名称。
-        /// </summary>
-        public string PropertyName { get; private set; }
+        string PropertyName { get; }
 
         /// <summary>
         /// 绑定指定的值到属性。
@@ -37,10 +21,7 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public Binding Binding(IObjectValue value)
-        {
-            return Component.DataBindings.Add(PropertyName, value, "Value");
-        }
+        IBindableProperty Binding(IObjectValue value);
 
         /// <summary>
         /// 绑定指定的值到属性，并使用指定的转换器。
@@ -51,11 +32,8 @@ namespace System.Windows.Forms
         /// <param name="culture">区域信息。</param>
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
-        /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception> 
-        public Binding Binding(IObjectValue value, IValueConverter converter, object convertParameter = null, CultureInfo culture = null)
-        {
-            return Binding(value, "Value", converter, convertParameter, culture);
-        }
+        /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
+        IBindableProperty Binding(IObjectValue value, IValueConverter converter, object convertParameter = null, CultureInfo culture = null);
 
         /// <summary>
         /// 绑定多个指定的值到属性，并使用指定的转换器。
@@ -66,13 +44,8 @@ namespace System.Windows.Forms
         /// <param name="culture">区域信息。</param>
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
-        /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception> 
-        public Binding Binding(MultiBindableValue value, IMultiValueConverter converter, object convertParameter = null, CultureInfo culture = null)
-        {
-            var binding = new MultiDataBinding(PropertyName, value, converter, convertParameter, culture);
-            Component.DataBindings.Add(binding);
-            return binding;
-        }
+        /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
+        IBindableProperty Binding(MultiBindableValue value, IMultiValueConverter converter, object convertParameter = null, CultureInfo culture = null);
 
         /// <summary>
         /// 绑定数据源与成员到属性。
@@ -82,10 +55,7 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public Binding Binding(object dataSource, string member)
-        {
-            return Component.DataBindings.Add(PropertyName, dataSource, member);
-        }
+        IBindableProperty Binding(object dataSource, string member);
 
         /// <summary>
         /// 绑定数据源与成员到属性，并使用指定的转换器。
@@ -98,12 +68,7 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public Binding Binding(object dataSource, string member, IValueConverter converter, object convertParameter = null, CultureInfo culture = null)
-        {
-            var binding = new DataBinding(PropertyName, dataSource, member, converter, convertParameter, culture);
-            Component.DataBindings.Add(binding);
-            return binding;
-        }
+        IBindableProperty Binding(object dataSource, string member, IValueConverter converter, object convertParameter = null, CultureInfo culture = null);
 
         /// <summary>
         /// 绑定指定的值到属性。
@@ -112,10 +77,8 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public Binding Binding(ObjectValue value)
-        {
-            return Binding((IObjectValue)value);
-        }
+        IBindableProperty Binding(ObjectValue value);
+
         /// <summary>
         /// 绑定数据源与成员到属性。
         /// </summary>
@@ -126,11 +89,7 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public Binding Binding<TSource, TMember>(TSource dataSource, Expression<Func<TSource, TMember>> expression)
-        {
-            var member = (expression.Body as MemberExpression).Member.Name;
-            return Binding(dataSource, member);
-        }
+        IBindableProperty Binding<TSource, TMember>(TSource dataSource, Expression<Func<TSource, TMember>> expression);
 
         /// <summary>
         /// 绑定数据源与成员到属性，并使用指定的转换器。
@@ -145,11 +104,7 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public Binding Binding<TSource, TMember>(TSource dataSource, Expression<Func<TSource, TMember>> expression, IValueConverter converter, object convertParameter = null, CultureInfo culture = null)
-        {
-            var member = (expression.Body as MemberExpression).Member.Name;
-            return Binding(dataSource, member, converter, convertParameter, culture);
-        }
+        IBindableProperty Binding<TSource, TMember>(TSource dataSource, Expression<Func<TSource, TMember>> expression, IValueConverter converter, object convertParameter = null, CultureInfo culture = null);
 
         /// <summary>
         /// 绑定数据源与成员到属性。
@@ -159,11 +114,7 @@ namespace System.Windows.Forms
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public Binding Binding(Type dataSourceType, string member)
-        {
-            var bindableValue = new BindableValue(dataSourceType, member);
-            return Binding(bindableValue);
-        }
+        IBindableProperty Binding(Type dataSourceType, string member);
 
         /// <summary>
         /// 绑定数据源与成员到属性，并使用指定的转换器。
@@ -175,19 +126,12 @@ namespace System.Windows.Forms
         /// <param name="culture">区域信息。</param>ing"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public Binding Binding(Type dataSourceType, string member, IValueConverter converter, object convertParameter = null, CultureInfo culture = null)
-        {
-            var bindableValue = new BindableValue(dataSourceType, member);
-            return Binding(bindableValue, converter, convertParameter, culture);
-        }
+        IBindableProperty Binding(Type dataSourceType, string member, IValueConverter converter, object convertParameter = null, CultureInfo culture = null);
 
         /// <summary>
         /// 确定该属性是否已绑定。
         /// </summary>
-        /// <returns></returns>
-        public bool IsBinded()
-        {
-            return Component.DataBindings.OfType<Binding>().Any(i => i.PropertyName.Equals(PropertyName));
-        }
+        /// <returns>返回一个值，确定属性是否已绑定。</returns>
+        bool IsBinded();
     }
 }

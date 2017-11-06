@@ -42,16 +42,19 @@
             this.lblColor = new System.Windows.Forms.Label();
             this.btnAddR = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtMenuText = new System.Windows.Forms.TextBox();
             this.txtAppName = new System.Windows.Forms.TextBox();
             this.btnAddB = new System.Windows.Forms.Button();
-            this.btnAddG = new System.Windows.Forms.Button();
             this.btnAll = new System.Windows.Forms.Button();
+            this.btnAddG = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.item1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudR)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -68,7 +71,7 @@
             this.groupBox1.Controls.Add(this.nudR);
             this.groupBox1.Controls.Add(this.lblColor);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(5, 5);
+            this.groupBox1.Location = new System.Drawing.Point(5, 30);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(421, 113);
             this.groupBox1.TabIndex = 0;
@@ -203,27 +206,27 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.txtMenuText);
             this.groupBox2.Controls.Add(this.txtAppName);
             this.groupBox2.Controls.Add(this.btnAddB);
             this.groupBox2.Controls.Add(this.btnAll);
             this.groupBox2.Controls.Add(this.btnAddG);
             this.groupBox2.Controls.Add(this.btnAddR);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(5, 118);
+            this.groupBox2.Location = new System.Drawing.Point(5, 143);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(421, 243);
+            this.groupBox2.Size = new System.Drawing.Size(421, 218);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Command Bindings";
             // 
-            // textBox1
+            // txtMenuText
             // 
-            this.textBox1.Location = new System.Drawing.Point(103, 165);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(172, 21);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtMenuText.Location = new System.Drawing.Point(103, 165);
+            this.txtMenuText.Name = "txtMenuText";
+            this.txtMenuText.Size = new System.Drawing.Size(172, 21);
+            this.txtMenuText.TabIndex = 2;
+            this.txtMenuText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // txtAppName
             // 
@@ -241,15 +244,6 @@
             this.btnAddB.Text = "Add Blue";
             this.btnAddB.UseVisualStyleBackColor = true;
             // 
-            // btnAddG
-            // 
-            this.btnAddG.Location = new System.Drawing.Point(143, 20);
-            this.btnAddG.Name = "btnAddG";
-            this.btnAddG.Size = new System.Drawing.Size(75, 23);
-            this.btnAddG.TabIndex = 1;
-            this.btnAddG.Text = "Add Green";
-            this.btnAddG.UseVisualStyleBackColor = true;
-            // 
             // btnAll
             // 
             this.btnAll.Location = new System.Drawing.Point(143, 80);
@@ -259,6 +253,31 @@
             this.btnAll.Text = "Add All";
             this.btnAll.UseVisualStyleBackColor = true;
             // 
+            // btnAddG
+            // 
+            this.btnAddG.Location = new System.Drawing.Point(143, 20);
+            this.btnAddG.Name = "btnAddG";
+            this.btnAddG.Size = new System.Drawing.Size(75, 23);
+            this.btnAddG.TabIndex = 1;
+            this.btnAddG.Text = "Add Green";
+            this.btnAddG.UseVisualStyleBackColor = true;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.item1ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(5, 5);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(421, 25);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // item1ToolStripMenuItem
+            // 
+            this.item1ToolStripMenuItem.Name = "item1ToolStripMenuItem";
+            this.item1ToolStripMenuItem.Size = new System.Drawing.Size(52, 21);
+            this.item1ToolStripMenuItem.Text = "item1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -266,6 +285,8 @@
             this.ClientSize = new System.Drawing.Size(431, 366);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "WinForm.Extras Tests";
@@ -276,7 +297,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudR)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -299,8 +323,10 @@
         private System.Windows.Forms.TextBox txtAppName;
         private System.Windows.Forms.Button btnAddB;
         private System.Windows.Forms.Button btnAddG;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtMenuText;
         private System.Windows.Forms.Button btnAll;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem item1ToolStripMenuItem;
     }
 }
 
