@@ -9,6 +9,8 @@ namespace System.Windows.Forms
     /// </summary>
     public class BindableComponentProperty : IBindableProperty
     {
+        private ControlUpdateMode controlUpdateMode;
+        private DataSourceUpdateMode dataSourceUpdateMode;
         /// <summary>
         /// 初始化 <see cref="BindableComponentProperty"/> 新实例。
         /// </summary>
@@ -28,12 +30,42 @@ namespace System.Windows.Forms
         /// <summary>
         /// 获取或设置一个值，该值表示控件属性更新方式。
         /// </summary>
-        public ControlUpdateMode ControlUpdateMode { get; set; }
+        public ControlUpdateMode ControlUpdateMode
+        {
+            get => controlUpdateMode;
+            set
+            {
+                if (controlUpdateMode != value)
+                {
+                    controlUpdateMode = value;
+                    var binding = GetBinding();
+                    if (binding != null)
+                    {
+                        binding.ControlUpdateMode = value;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// 获取或设置一个值，该值表示数据源更新方式。
         /// </summary>
-        public DataSourceUpdateMode DataSourceUpdateMode { get; set; }
+        public DataSourceUpdateMode DataSourceUpdateMode
+        {
+            get => dataSourceUpdateMode;
+            set
+            {
+                if (dataSourceUpdateMode != value)
+                {
+                    dataSourceUpdateMode = value;
+                    var binding = GetBinding();
+                    if (binding != null)
+                    {
+                        binding.DataSourceUpdateMode = value;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// 获取一个值，该值表示属性名称。
@@ -209,6 +241,11 @@ namespace System.Windows.Forms
         public bool IsBinded()
         {
             return Component.DataBindings.OfType<Binding>().Any(i => i.PropertyName.Equals(PropertyName));
+        }
+
+        private Binding GetBinding()
+        {
+            return Component.DataBindings.OfType<Binding>().SingleOrDefault(i => i.PropertyName.Equals(PropertyName));
         }
     }
 }

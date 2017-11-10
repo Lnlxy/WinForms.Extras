@@ -1,5 +1,8 @@
 ﻿namespace System.Windows.Forms
 {
+    /// <summary>
+    /// 定义一个值对象，提供值改变时的事件通知。
+    /// </summary>
     public interface IValueObject
     {
         /// <summary>

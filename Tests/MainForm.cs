@@ -50,9 +50,10 @@
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
             item1ToolStripMenuItem.Property(i => i.Text).Binding(txtMenuText, i => i.Text)
                 .SetDataSourceUpdateMode(DataSourceUpdateMode.OnPropertyChanged);
-            this.Property(i => i.R).Binding(254);
+            this.Property(i => i.R).Binding(254); 
             var multiValues = this.CreateMultiBindableValue(i => i.R, i => i.G, i => i.B);
             lblTotal.Property()
                 .Binding(multiValues, new MultiValueToStringConverter())
@@ -81,7 +82,6 @@
             btnAddR.Command(new RelayCommand<int>(i => R = i + 1, i => i >= 0 & i < 255), this, i => i.R);
             btnAddG.Command(new RelayCommand<int>(i => G = i + 1, i => i >= 0 & i < 255), this, i => i.G);
             btnAddB.Command(new RelayCommand<int>(i => B = i + 1, i => i >= 0 & i < 255), this, i => i.B);
-
             btnAll.Command(new RelayCommand(i =>
             {
                 if (R < 255)
@@ -130,7 +130,7 @@
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var color = (Color)value;
-            return color.ToString();
+            return color.ToString(); 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

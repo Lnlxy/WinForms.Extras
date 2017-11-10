@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace System.Windows.Forms
+﻿namespace System.Windows.Forms
 {
-    public sealed class ValueObject : IValueObject, IConvertible, IComparable<ValueObject>, IComparable, IComparer, IComparer<ValueObject>
+    /// <summary>
+    /// 定义一个值对象。
+    /// </summary>
+    public sealed class ValueObject : IValueObject, IConvertible, IFormattable, IEquatable<ValueObject>
     {
         private volatile object _value;
 
@@ -31,26 +31,6 @@ namespace System.Windows.Forms
                     ValueChanged?.Invoke(this, EventArgs.Empty);
                 }
             }
-        }
-
-        public int Compare(object x, object y)
-        {
-            return Comparer.Default.Compare(x, y);
-        }
-
-        public int Compare(ValueObject x, ValueObject y)
-        {
-            return x?.CompareTo(y) ?? 0;
-        }
-
-        public int CompareTo(object obj)
-        {
-            return Comparer.Default.Compare(_value, obj);
-        }
-
-        public int CompareTo(ValueObject other)
-        {
-            return Comparer.Default.Compare(_value, other?._value);
         }
 
         public TypeCode GetTypeCode()
@@ -115,12 +95,17 @@ namespace System.Windows.Forms
 
         public override string ToString()
         {
-            return $"{{{_value.ToString()}}}";
+            return _value.ToString();
         }
 
         public string ToString(IFormatProvider provider)
         {
             return Convert.ToString(_value, provider);
+        }
+
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(formatProvider, format, _value);
         }
 
         public object ToType(Type conversionType, IFormatProvider provider)
@@ -143,11 +128,18 @@ namespace System.Windows.Forms
             return Convert.ToUInt64(_value, provider);
         }
 
-
-
-
-
-
+        bool IEquatable<ValueObject>.Equals(ValueObject other)
+        {
+            return _value?.Equals(other?._value) ?? false;
+        }
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ValueObject);
+        }
+        public override int GetHashCode()
+        {
+            return _value.GetHashCode();
+        }
 
         public static implicit operator ValueObject(string value)
         {

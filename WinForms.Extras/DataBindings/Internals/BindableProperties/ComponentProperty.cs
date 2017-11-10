@@ -212,7 +212,7 @@ namespace System.Windows.Forms
                 {
                     WriteValue(dataSourceValue, convertBack);
                 }
-            });
+            }); 
             dataSourceValue.ValueChanged += (e, s) =>
             {
                 if (ControlUpdateMode != ControlUpdateMode.Never)

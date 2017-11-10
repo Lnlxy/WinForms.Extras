@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace System.Windows.Forms
 {
     /// <summary>
-    /// 定义绑定方法。
+    /// 定义支持绑定方法属性信息。
     /// </summary>
     public interface IBindableProperty
     {

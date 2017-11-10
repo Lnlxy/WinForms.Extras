@@ -7,8 +7,13 @@ namespace System.Windows.Forms
     public static class BindablePropertyExtensions
     {
         /// <summary>
-        /// 创建默认绑定属性。
+        /// 创建由组件指定的默认属性的绑定属性。
         /// </summary>
+        /// <remarks>
+        /// 若组件继承<see cref="IBindableComponent"/> 则获取由 <see cref="DefaultBindingPropertyAttribute"/> 标记的值为默认属性。
+        /// 否则则获取由 <see cref="DefaultPropertyAttribute"/> 标记的值为默认属性。
+        /// 若一个组件未指定以上两个标记时，则抛出异常。
+        /// </remarks>
         /// <param name="component">此组件实例。</param>
         /// <returns>返回 <see cref="IBindableProperty"/> 新实例。</returns>
         public static IBindableProperty Property(this Component component)

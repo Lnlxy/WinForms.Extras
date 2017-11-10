@@ -30,6 +30,17 @@ namespace System.Windows.Forms
         {
             new CommandBinding(command, new CommandTarget(component), commandParameter);
         }
+        /// <summary>
+        /// 添加命令。
+        /// </summary>
+        /// <param name="component">目标组件</param>
+        /// <param name="command">命令。</param>
+        /// <param name="commandParameter">命令执行参数。</param>
+        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
+        public static void Command(this Component component, ICommand command, ValueObject commandParameter)
+        {
+            new CommandBinding(command, new CommandTarget(component), commandParameter);
+        }
 
         /// <summary>
         /// 添加命令。
