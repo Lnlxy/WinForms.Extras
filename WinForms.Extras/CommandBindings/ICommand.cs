@@ -18,4 +18,5 @@
         /// <param name="parameter">参数。</param>
         void Execute(object parameter);
     }
+     
 }

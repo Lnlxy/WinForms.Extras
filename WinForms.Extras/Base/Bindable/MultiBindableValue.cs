@@ -9,18 +9,18 @@ namespace System.Windows.Forms
     /// </summary>
     public class MultiBindableValue : IBindableValue
     {
-        private readonly List<IBindableValue> _items = new List<IBindableValue>();
+        private readonly List<IValueObject> _items = new List<IValueObject>();
 
-        public MultiBindableValue(IBindableValue item1, IBindableValue item2, params IBindableValue[] items)
-            : this(new List<IBindableValue> { item1, item2 }.Concat(items).ToList())
+        public MultiBindableValue(IValueObject item1, IValueObject item2, params IValueObject[] items)
+            : this(new List<IValueObject> { item1, item2 }.Concat(items).ToList())
         {
         }
 
-        public MultiBindableValue(IEnumerable<IBindableValue> items)
+        public MultiBindableValue(IEnumerable<IValueObject> items)
         {
             foreach (var item in items)
             {
-                item.PropertyChanged += OnPropertyChanged;
+                item.ValueChanged += OnValueChanged;
             }
             _items.AddRange(items);
         }
@@ -33,23 +33,23 @@ namespace System.Windows.Forms
 
         public Type Type => typeof(object[]);
 
-        public object Value { get => GetValue(); set => SetValue(value); }
+        public object[] Value { get => GetValue(); set => SetValue(value); }
+        object IValueObject.Value { get => Value; set => Value = (object[])value; }
 
-        public object GetValue()
+        object[] GetValue()
         {
             return _items.Select(i => i.Value).ToArray();
         }
 
-        public void SetValue(object newValue)
+        void SetValue(object[] newValue)
         {
-            var array = (object[])newValue;
             for (int i = 0; i < _items.Count; i++)
             {
-                _items[i].Value = array[i];
+                _items[i].Value = newValue[i];
             }
         }
 
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnValueChanged(object sender, EventArgs e)
         {
             ValueChanged?.Invoke(this, EventArgs.Empty);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));

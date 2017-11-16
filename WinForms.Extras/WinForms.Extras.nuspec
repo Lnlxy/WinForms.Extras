@@ -11,7 +11,7 @@
     <iconUrl>https://github.com/ghoze/WinForms.Extras</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes></releaseNotes>
+    <releaseNotes>修复一些Bug</releaseNotes>
     <copyright>Copyright 2017</copyright> 
   </metadata>
 </package>

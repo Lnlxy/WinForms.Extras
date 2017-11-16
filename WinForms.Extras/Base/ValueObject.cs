@@ -139,8 +139,7 @@
         public override int GetHashCode()
         {
             return _value.GetHashCode();
-        }
-
+        } 
         public static implicit operator ValueObject(string value)
         {
             return new ValueObject(value);

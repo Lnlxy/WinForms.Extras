@@ -33,12 +33,12 @@ namespace System.Windows.Forms
         /// <summary>
         /// 获取或设置一个值，该值表示控件属性更新方式。
         /// </summary>
-        public ControlUpdateMode ControlUpdateMode { get; set; }
+        public ControlUpdateMode ControlUpdateMode { get; set; } = ControlUpdateMode.OnPropertyChanged;
 
         /// <summary>
         /// 获取或设置一个值，该值表示数据源更新方式。
         /// </summary>
-        public DataSourceUpdateMode DataSourceUpdateMode { get; set; }
+        public DataSourceUpdateMode DataSourceUpdateMode { get; set; } = DataSourceUpdateMode.OnPropertyChanged;
 
         /// <summary>
         /// 获取一个值，该值表示属性名称。
@@ -212,7 +212,7 @@ namespace System.Windows.Forms
                 {
                     WriteValue(dataSourceValue, convertBack);
                 }
-            }); 
+            });
             dataSourceValue.ValueChanged += (e, s) =>
             {
                 if (ControlUpdateMode != ControlUpdateMode.Never)

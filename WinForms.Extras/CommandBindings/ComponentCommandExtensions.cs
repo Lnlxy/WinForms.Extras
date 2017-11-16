@@ -12,34 +12,30 @@ namespace System.Windows.Forms
         /// 添加命令。
         /// </summary>
         /// <param name="component">目标组件</param>
-        /// <param name="command">命令。</param>
-        /// <param name="commandParameter">命令执行参数。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
+        /// <param name="command">命令。</param> 
         public static void Command(this Component component, ICommand command)
         {
-            new CommandBinding(command, new CommandTarget(component));
+            component.Event().Command(command);
         }
         /// <summary>
         /// 添加命令。
         /// </summary>
         /// <param name="component">目标组件</param>
         /// <param name="command">命令。</param>
-        /// <param name="commandParameter">命令执行参数。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
+        /// <param name="commandParameter">命令执行参数。</param> 
         public static void Command(this Component component, ICommand command, IValueObject commandParameter)
         {
-            new CommandBinding(command, new CommandTarget(component), commandParameter);
+            component.Event().Command(command, commandParameter);
         }
         /// <summary>
         /// 添加命令。
         /// </summary>
         /// <param name="component">目标组件</param>
         /// <param name="command">命令。</param>
-        /// <param name="commandParameter">命令执行参数。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
+        /// <param name="commandParameter">命令执行参数。</param> 
         public static void Command(this Component component, ICommand command, ValueObject commandParameter)
         {
-            new CommandBinding(command, new CommandTarget(component), commandParameter);
+            component.Event().Command(command, commandParameter);
         }
 
         /// <summary>
@@ -50,16 +46,10 @@ namespace System.Windows.Forms
         /// <param name="component">目标组件</param>
         /// <param name="command">命令。</param>
         /// <param name="source">数据源。</param>
-        /// <param name="expression">参数表达式。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
+        /// <param name="expression">参数表达式。</param> 
         public static void Command<TSource, TParameter>(this Component component, ICommand command, TSource source, Expression<Func<TSource, TParameter>> expression)
         {
-            var member = expression.Body as MemberExpression;
-            if (member.Member.MemberType != Reflection.MemberTypes.Property)
-            {
-                throw new InvalidOperationException($"{member.Member.Name} is not a property.");
-            }
-            Command(component, command, source.CreateBindableValue(expression));
+            component.Event().Command(command, source, expression);
         }
     }
 }

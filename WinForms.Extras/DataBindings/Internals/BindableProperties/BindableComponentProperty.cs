@@ -9,8 +9,8 @@ namespace System.Windows.Forms
     /// </summary>
     public class BindableComponentProperty : IBindableProperty
     {
-        private ControlUpdateMode controlUpdateMode;
-        private DataSourceUpdateMode dataSourceUpdateMode;
+        private ControlUpdateMode controlUpdateMode = ControlUpdateMode.OnPropertyChanged;
+        private DataSourceUpdateMode dataSourceUpdateMode = DataSourceUpdateMode.OnPropertyChanged;
         /// <summary>
         /// 初始化 <see cref="BindableComponentProperty"/> 新实例。
         /// </summary>

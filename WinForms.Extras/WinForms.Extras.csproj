@@ -46,6 +46,8 @@
     <Compile Include="Base\Converters\BooleanToCheckedStateConverter.cs" />
     <Compile Include="Base\Internals\SourceEventDescriptor.cs" />
     <Compile Include="Base\ValueObject.cs" />
+    <Compile Include="CommandBindings\ComponentEvent.cs" />
+    <Compile Include="CommandBindings\ComponentEventExtensions.cs" />
     <Compile Include="DataBindings\BindablePropertyExtensions.cs" />
     <Compile Include="DataBindings\Internals\BindableProperties\BindableComponentProperty.cs" />
     <Compile Include="DataBindings\Internals\BindableProperties\ComponentProperty.cs" />

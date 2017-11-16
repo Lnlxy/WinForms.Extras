@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms.Internals;
 
 namespace System.Windows.Forms
@@ -8,55 +9,158 @@ namespace System.Windows.Forms
     /// </summary>
     public class BindableValue : IBindableValue
     {
-        private readonly object _dataSource = null;
-
         private readonly SourcePropertyDescriptor _property;
 
+        private BindableValue next = null;
+
+        private BindableValue previous = null;
+
+        /// <summary>
+        /// 初始化 <see cref="BindableValue"/> 新实例。
+        /// </summary>
+        /// <param name="dataSource">数据源。</param>
+        /// <param name="propertyName">属性名称。</param>
         public BindableValue(object dataSource, string propertyName)
         {
-            _dataSource = dataSource;
-            PropertyName = propertyName;
-            _property = SourceTypeDescriptor.GetProperty(dataSource, propertyName);
-            _property.AddValueChanged(_dataSource, OnValueChanged);
+            var properties = propertyName.Split('.').ToList();
+
+            if (properties.Count == 1)
+            {
+                DataSource = dataSource;
+                _property = SourceTypeDescriptor.GetProperty(dataSource, properties.Last());
+                _property.AddValueChanged(dataSource, OnValueChanged);
+            }
+            else
+            {
+                var root = new BindableValue(dataSource, properties[0]);
+                for (int i = 1; i < properties.Count; i++)
+                {
+                    var pro = SourceTypeDescriptor.GetProperty(root.Type, properties[i]);
+                    if (i == (properties.Count - 1))
+                    {
+                        DataSource = root.Value;
+                        _property = pro;
+                        _property.AddValueChanged(root.Value, OnValueChanged);
+                        root.next = this;
+                        previous = root;
+
+                    }
+                    else
+                    {
+                        root.next = new BindableValue(root.Value, pro);
+                        root.next.previous = root;
+                        root = root.next;
+                    }
+                }
+            }
         }
 
+        /// <summary>
+        /// 初始化 <see cref="BindableValue"/> 新实例。
+        /// </summary>
+        /// <param name="dataSourceType">数据源类型。</param>
+        /// <param name="propertyName">属性名称。</param>
         public BindableValue(Type dataSourceType, string propertyName)
         {
-            PropertyName = propertyName;
-            _property = SourceTypeDescriptor.GetProperty(dataSourceType, propertyName);
-            _property.AddValueChanged(_dataSource, OnValueChanged);
+            var properties = propertyName.Split('.').ToList();
+
+            if (properties.Count == 1)
+            {
+                DataSource = null;
+                _property = SourceTypeDescriptor.GetProperty(dataSourceType, properties.Last());
+                _property.AddValueChanged(null, OnValueChanged);
+            }
+            else
+            {
+                var root = new BindableValue(dataSourceType, properties[0]);
+                for (int i = 1; i < properties.Count; i++)
+                {
+                    var pro = SourceTypeDescriptor.GetProperty(root.Type, properties[i]);
+                    if (i == (properties.Count - 1))
+                    {
+                        DataSource = root.Value;
+                        _property = pro;
+                        _property.AddValueChanged(root.Value, OnValueChanged);
+                    }
+                    else
+                    {
+
+                        root.next = new BindableValue(root.Value, pro);
+                        root.next.previous = root;
+                        root = root.next;
+                    }
+                }
+            }
+        }
+
+        private BindableValue(object dataSource, SourcePropertyDescriptor property)
+        {
+            DataSource = dataSource;
+            _property = property;
+            _property.AddValueChanged(dataSource, OnValueChanged);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event EventHandler ValueChanged;
 
-        /// <summary>
-        /// 获取一个值，该值表示数据源类型。
-        /// </summary>
-        public Type DataSourceType { get => _property.ReflectedType; }
+        public Object DataSource { get; private set; }
 
-        /// <summary>
-        /// 获取一个值，该值表示绑定属性名称。
-        /// </summary>
-        public string PropertyName { get; private set; }
+        public string PropertyName => _property.Name;
 
-        /// <summary>
-        /// 获取一个值，该值表示属性类型。
-        /// </summary>
         public Type Type => _property.PropertyType;
 
-        public object Value { get => _property.GetValue(_dataSource); set => _property.SetValue(_dataSource, value); }
-
-        public override string ToString()
+        public object Value
         {
-            return $"{{SourceType:{DataSourceType}, PropertyName:{PropertyName}}}";
+            get
+            {
+                {
+                    if (previous == null)//没有深层次
+                    {
+                        return _property.GetValue(DataSource);
+                    }
+                    else
+                    {
+                        var dataSource = previous.Value;
+                        if (dataSource != null)
+                        {
+                            return _property.GetValue(dataSource);
+                        }
+                        return null;
+                    }
+                }
+            }
+            set
+            {
+                if (previous == null)//没有深层次
+                {
+                    _property.SetValue(DataSource, value);
+                }
+                else
+                {
+                    var dataSource = previous.Value;
+                    if (dataSource != null)
+                    {
+                        _property.SetValue(dataSource, value);
+                    }
+                }
+            }
         }
 
         private void OnValueChanged(object sender, EventArgs e)
         {
-            ValueChanged?.Invoke(this, EventArgs.Empty);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+            if (next != null)
+            {
+                next._property.RemoveValueChanged(next.DataSource, OnValueChanged);
+                next.DataSource = Value;
+                next._property.AddValueChanged(next.DataSource, OnValueChanged);
+                next.OnValueChanged(next.DataSource, e);
+            }
+            else
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
+                ValueChanged?.Invoke(this, e);
+            }
         }
     }
 }

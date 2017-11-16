@@ -29,6 +29,13 @@ namespace System.Windows.Forms
             _enabledProperty = Internals.SourceTypeDescriptor.GetProperty(component, "Enabled");
         }
 
+        internal CommandTarget(Component component, string eventName)
+        {
+            Component = component; 
+            _defaultEvent = Internals.SourceTypeDescriptor.GetEvent(component, eventName);
+            _enabledProperty = Internals.SourceTypeDescriptor.GetProperty(component, "Enabled");
+        }
+
         private static string GetDefaultEventName(Type type)
         {
             var attribute = type.GetCustomAttributes(typeof(DefaultEventAttribute), true).FirstOrDefault() as DefaultEventAttribute;

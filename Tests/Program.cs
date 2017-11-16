@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,7 +17,22 @@ namespace Tests
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            var paths = Environment.GetCommandLineArgs();
+            if (paths.Length == 1)
+            {
+                Application.Run(new NotePad());
+            }
+            else if (paths.Length == 2)
+            {
+                Application.Run(new NotePad(paths[1]));
+            }
+            else
+            {
+                foreach (var path in paths.Skip(1))
+                {
+                    AppDomain.CurrentDomain.ExecuteAssembly(Assembly.GetEntryAssembly().FullName, new string[] { path });
+                }
+            }
         }
     }
 }
