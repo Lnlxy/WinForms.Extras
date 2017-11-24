@@ -44,6 +44,7 @@
     <Compile Include="Base\Bindable\IBindableValue.cs" />
     <Compile Include="Base\Bindable\MultiBindableValue.cs" />
     <Compile Include="Base\Converters\BooleanToCheckedStateConverter.cs" />
+    <Compile Include="Base\Converters\OppositeBooleanConverter.cs" />
     <Compile Include="Base\Internals\SourceEventDescriptor.cs" />
     <Compile Include="Base\ValueObject.cs" />
     <Compile Include="CommandBindings\ComponentEvent.cs" />

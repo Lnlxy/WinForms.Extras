@@ -110,14 +110,20 @@
 
             //命令执行。
             tsmiStatusBar.Command(new RelayCommand(x => Settings.ShowStatusBar = !Settings.ShowStatusBar));
-            tsmiFont.Command(new ChangeFontCommand(), this, x => x.Settings);
-            tsmiNew.Command(new NewFileCommnd(), new ValueObject(this));
-            tsmiOpen.Command(new OpenFileCommand(), new ValueObject(this));
-            tsmiSave.Command(new SaveFileCommand(), new MultiBindableValue(new BindableValue(this, "Document"), new BindableValue(this, "Document.IsSaved")));
-            tsmiUndo.Command(new RelayCommand(x => txtContent.Undo(), x => (bool)x), this, x => x.CanUndo);
-            tsmiCopy.Command(new RelayCommand(x => txtContent.Copy(), x => (bool)x), this, x => x.SelectionChanged);
-            tsmiCut.Command(new RelayCommand(x => txtContent.Cut(), x => (bool)x), this, x => x.SelectionChanged);
-            tsmiPaste.Command(new RelayCommand(x => txtContent.Paste(), x => (bool)x), this, x => x.CanPaste);
+            tsmiFont.Command(new ChangeFontCommand(), Settings);
+            tsmiNew.Command(new NewFileCommnd(), this);
+            tsmiOpen.Command(new OpenFileCommand(), this);
+            tsmiSave.Property(i => i.Enabled).Binding(new BindableValue(this, "Document.IsSaved"), new OppositeBooleanConverter());
+            tsmiSave.Command(new SaveFileCommand(), Document);
+            tsmiUndo.Property(i => i.Enabled).Binding(this, x => x.CanUndo);
+            tsmiUndo.Command(new RelayCommand(x => txtContent.Undo()));
+            tsmiCopy.Property(i => i.Enabled).Binding(this, x => x.SelectionChanged);
+            tsmiCopy.Command(new RelayCommand(x => txtContent.Copy()));
+            tsmiCut.Property(i => i.Enabled).Binding(this, x => x.SelectionChanged);
+            tsmiCut.Command(new RelayCommand(x => txtContent.Cut()));
+            tsmiPaste.Property(i => i.Enabled).Binding(this, x => x.CanPaste);
+            tsmiPaste.Command(new RelayCommand(x => txtContent.Paste()));
+            tsmiDelete.Property(i => i.Enabled).Binding(this, x => x.SelectionChanged);
             tsmiDelete.Command(new RelayCommand(x =>
             {
                 var selecionIndex = txtContent.SelectionStart;
@@ -126,7 +132,7 @@
                 {
                     txtContent.SelectionStart = selecionIndex;
                 }
-            }, x => (bool)x), this, x => x.SelectionChanged);
+            }));
             loaded = true;
         }
 

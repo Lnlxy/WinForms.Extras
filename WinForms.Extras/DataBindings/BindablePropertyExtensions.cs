@@ -4,6 +4,9 @@ using System.Linq.Expressions;
 
 namespace System.Windows.Forms
 {
+    /// <summary>
+    /// 属性绑定。
+    /// </summary>
     public static class BindablePropertyExtensions
     {
         /// <summary>
@@ -79,11 +82,10 @@ namespace System.Windows.Forms
 
         ///<summary>
         /// 设置控件更新方式。
-        /// </summary>
-        /// <typeparam name="Binding">绑定类型。</typeparam>
+        /// </summary> 
         /// <param name="property">源。</param>
         /// <param name="mode">模式。</param>
-        /// <returns>返回设置完成后的 <typeparamref name="IBindableProperty"/>。</returns>
+        /// <returns>返回 <see cref="IBindableProperty"/> 新实例。</returns>
         public static IBindableProperty SetControlUpdateMode(this IBindableProperty property, ControlUpdateMode mode)
         {
             property.ControlUpdateMode = mode;
@@ -93,10 +95,9 @@ namespace System.Windows.Forms
         /// <summary>
         /// 设置数据源更新方式。
         /// </summary>
-        /// <typeparam name="Binding">绑定类型。</typeparam>
-        /// <param name="binding">源。</param>
+        /// <param name="property">源。</param>
         /// <param name="mode">模式。</param>
-        /// <returns>返回设置完成后的 <typeparamref name="IBindableProperty"/>。</returns>
+        /// <returns>返回 <see cref="IBindableProperty"/> 新实例。</returns>
         public static IBindableProperty SetDataSourceUpdateMode(this IBindableProperty property, DataSourceUpdateMode mode)
         {
             property.DataSourceUpdateMode = mode;

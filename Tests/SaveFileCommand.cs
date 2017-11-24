@@ -10,12 +10,13 @@ namespace Tests
     {
         public bool CanExecute(object parameter)
         {
-            return !(bool)((object[])parameter)[1];
+            var doc = (parameter as Document);
+            return !doc?.IsSaved ?? true;
         }
 
         public void Execute(object parameter)
         {
-            ((Document)((object[])parameter)[0]).Save();
+            (parameter as Document).Save();
         }
     }
 }

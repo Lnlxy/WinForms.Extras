@@ -1,25 +1,41 @@
 ﻿namespace System.Windows.Forms
 {
     /// <summary>
-    /// 定义一个值对象。
+    /// 定义一个存储值的对象。
     /// </summary>
-    public sealed class ValueObject : IValueObject, IConvertible, IFormattable, IEquatable<ValueObject>
+    public sealed class ValueObject : IValueObject, IFormattable, IEquatable<ValueObject>
     {
         private volatile object _value;
 
+        /// <summary>
+        /// 初始化 <see cref="ValueObject"/> 新实例。
+        /// </summary>
         public ValueObject()
         {
         }
 
+        /// <summary>
+        /// 初始化 <see cref="ValueObject"/> 新实例。
+        /// </summary>
+        /// <param name="value">值。</param>
         public ValueObject(object value)
         {
             _value = value;
         }
 
+        /// <summary>
+        /// 定义 <see cref="Value"/> 值发生改变时的处理方法。
+        /// </summary>
         public event EventHandler ValueChanged;
 
-        public Type Type => _value?.GetType() ?? null;
+        /// <summary>
+        /// 获取一个值，该值表示数据类型。
+        /// </summary>
+        public Type Type => _value?.GetType();
 
+        /// <summary>
+        /// 获取或设置一个值，该值表示值对象存储的值。
+        /// </summary>
         public object Value
         {
             get => _value;
@@ -33,165 +49,164 @@
             }
         }
 
-        public TypeCode GetTypeCode()
+        /// <summary>
+        /// 指示当前对象是否等于同一类型的另一个对象。
+        /// </summary>
+        /// <param name="obj">与此对象进行比较的对象。</param>
+        /// <returns>如果当前对象等于 other 参数，则为 true；否则为 false。</returns>
+        public override bool Equals(object obj)
         {
-            return Type.GetTypeCode(_value?.GetType() ?? typeof(Nullable));
+            return Equals(obj as ValueObject);
         }
 
-        public bool ToBoolean(IFormatProvider provider)
+        /// <summary>
+        /// 指示当前对象是否等于同一类型的另一个对象。
+        /// </summary>
+        /// <param name="other">与此对象进行比较的对象。</param>
+        /// <returns>如果当前对象等于 other 参数，则为 true；否则为 false。</returns>
+        public bool Equals(ValueObject other)
         {
-            return Convert.ToBoolean(_value, provider);
+            return _value?.Equals(other?._value) ?? false;
         }
 
-        public byte ToByte(IFormatProvider provider)
+        /// <summary>
+        /// 获取对象的Hash值。
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
         {
-            return Convert.ToByte(_value, provider);
+            return _value.GetHashCode();
         }
 
-        public char ToChar(IFormatProvider provider)
-        {
-            return Convert.ToChar(_value, provider);
-        }
-
-        public DateTime ToDateTime(IFormatProvider provider)
-        {
-            return Convert.ToDateTime(_value, provider);
-        }
-
-        public decimal ToDecimal(IFormatProvider provider)
-        {
-            return Convert.ToDecimal(_value, provider);
-        }
-
-        public double ToDouble(IFormatProvider provider)
-        {
-            return Convert.ToDouble(_value, provider);
-        }
-
-        public short ToInt16(IFormatProvider provider)
-        {
-            return Convert.ToInt16(_value, provider);
-        }
-
-        public int ToInt32(IFormatProvider provider)
-        {
-            return Convert.ToInt32(_value, provider);
-        }
-
-        public long ToInt64(IFormatProvider provider)
-        {
-            return Convert.ToInt64(_value, provider);
-        }
-
-        public sbyte ToSByte(IFormatProvider provider)
-        {
-            return Convert.ToSByte(_value, provider);
-        }
-
-        public float ToSingle(IFormatProvider provider)
-        {
-            return Convert.ToSingle(_value, provider);
-        }
-
+        /// <summary>
+        /// 格式化当前实例的值。
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return _value.ToString();
         }
 
-        public string ToString(IFormatProvider provider)
-        {
-            return Convert.ToString(_value, provider);
-        }
-
+        /// <summary>
+        /// 使用指定的格式格式化当前实例的值。
+        /// </summary>
+        /// <param name="format">要使用的格式。- 或 -null 引用（Visual Basic 中为 Nothing）将使用为 System.IFormattable 实现的类型所定义的默认格式。</param>
+        /// <param name="formatProvider">要用于设置值格式的提供程序。- 或 -null 引用（Visual Basic 中为 Nothing）将从操作系统的当前区域设置中获取数字格式信息。</param>
+        /// <returns> 当前实例的值，以指定格式表示。</returns>
         public string ToString(string format, IFormatProvider formatProvider)
         {
             return string.Format(formatProvider, format, _value);
         }
 
-        public object ToType(Type conversionType, IFormatProvider provider)
-        {
-            return Convert.ChangeType(_value, conversionType, provider);
-        }
 
-        public ushort ToUInt16(IFormatProvider provider)
-        {
-            return Convert.ToUInt16(_value, provider);
-        }
-
-        public uint ToUInt32(IFormatProvider provider)
-        {
-            return Convert.ToUInt32(_value, provider);
-        }
-
-        public ulong ToUInt64(IFormatProvider provider)
-        {
-            return Convert.ToUInt64(_value, provider);
-        }
-
-        bool IEquatable<ValueObject>.Equals(ValueObject other)
-        {
-            return _value?.Equals(other?._value) ?? false;
-        }
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as ValueObject);
-        }
-        public override int GetHashCode()
-        {
-            return _value.GetHashCode();
-        } 
+        /// <summary>
+        /// 创建存储 <see cref="string"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(string value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="short"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(short value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="int"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(int value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="long"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(long value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="ushort"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(ushort value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="uint"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(uint value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="ulong"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(ulong value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="float"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(float value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="double"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(double value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="char"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(char value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="byte"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(byte value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="sbyte"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(sbyte value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="decimal"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(decimal value)
         {
             return new ValueObject(value);
         }
+        /// <summary>
+        /// 创建存储 <see cref="bool"/> 类型的值的对象。
+        /// </summary>
+        /// <param name="value">值</param>
         public static implicit operator ValueObject(bool value)
         {
             return new ValueObject(value);
