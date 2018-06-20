@@ -1,4 +1,14 @@
-﻿using System.ComponentModel;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="ComponentProperty.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq.Expressions;
 
@@ -9,9 +19,15 @@ namespace System.Windows.Forms
     /// </summary>
     public class ComponentProperty : IBindableProperty
     {
+        #region Fields
+
         private readonly Internals.SourcePropertyDescriptor bindingProperty;
 
         private bool isBinded;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// 初始化 <see cref="ComponentProperty"/> 新实例。
@@ -24,6 +40,10 @@ namespace System.Windows.Forms
             PropertyName = propertyName;
             bindingProperty = Internals.SourceTypeDescriptor.GetProperty(component, propertyName);
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// 获取一个值，该值表示属性所属组件。
@@ -44,6 +64,10 @@ namespace System.Windows.Forms
         /// 获取一个值，该值表示属性名称。
         /// </summary>
         public string PropertyName { get; private set; }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// 绑定指定的值到属性。
@@ -120,19 +144,6 @@ namespace System.Windows.Forms
         }
 
         /// <summary>
-        /// 绑定指定的值到属性。
-        /// </summary>
-        /// <param name="value">绑定的值。</param>
-        /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
-        /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
-        /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        public IBindableProperty Binding(ValueObject value)
-        {
-            BindingCore(value, null, null);
-            return this;
-        }
-
-        /// <summary>
         /// 绑定数据源与成员到属性。
         /// </summary>
         /// <typeparam name="TSource">数据源类型。</typeparam>
@@ -194,6 +205,19 @@ namespace System.Windows.Forms
         }
 
         /// <summary>
+        /// 绑定指定的值到属性。
+        /// </summary>
+        /// <param name="value">绑定的值。</param>
+        /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
+        /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
+        /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
+        public IBindableProperty Binding(ValueObject value)
+        {
+            BindingCore(value, null, null);
+            return this;
+        }
+
+        /// <summary>
         /// 确定该属性是否已绑定。
         /// </summary>
         /// <returns></returns>
@@ -241,5 +265,7 @@ namespace System.Windows.Forms
                 dataSourceValue.Value = newValue;
             }
         }
+
+        #endregion
     }
 }

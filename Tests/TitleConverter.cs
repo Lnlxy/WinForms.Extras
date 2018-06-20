@@ -1,14 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="TitleConverter.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Tests
 {
-    class TitleConverter : IMultiValueConverter
+    internal class TitleConverter : IMultiValueConverter
     {
+        #region Methods
+
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var cangedChar = (bool)values[1] ? "" : "*";
@@ -19,5 +28,7 @@ namespace Tests
         {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

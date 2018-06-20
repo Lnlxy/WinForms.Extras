@@ -1,4 +1,14 @@
-﻿using System.ComponentModel;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="BindableValue.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms.Internals;
 
@@ -9,11 +19,17 @@ namespace System.Windows.Forms
     /// </summary>
     public class BindableValue : IBindableValue
     {
+        #region Fields
+
         private readonly SourcePropertyDescriptor _property;
 
         private BindableValue next = null;
 
         private BindableValue previous = null;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// 初始化 <see cref="BindableValue"/> 新实例。
@@ -100,9 +116,17 @@ namespace System.Windows.Forms
             _property.AddValueChanged(dataSource, OnValueChanged);
         }
 
+        #endregion
+
+        #region Events
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event EventHandler ValueChanged;
+
+        #endregion
+
+        #region Properties
 
         public Object DataSource { get; private set; }
 
@@ -147,6 +171,10 @@ namespace System.Windows.Forms
             }
         }
 
+        #endregion
+
+        #region Methods
+
         private void OnValueChanged(object sender, EventArgs e)
         {
             if (next != null)
@@ -162,5 +190,7 @@ namespace System.Windows.Forms
                 ValueChanged?.Invoke(this, e);
             }
         }
+
+        #endregion
     }
 }

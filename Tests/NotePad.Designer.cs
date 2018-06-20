@@ -1,11 +1,81 @@
-﻿namespace Tests
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="NotePad.Designer.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+namespace Tests
 {
-    partial class NotePad
+    internal partial class NotePad
     {
+        #region Fields
+
         /// <summary>
         /// 必需的设计器变量。
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        private System.Windows.Forms.MenuStrip menuStrip1;
+
+        private System.Windows.Forms.Panel plBorder;
+
+        private System.Windows.Forms.StatusStrip sspStatus;
+
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiCopy;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiCut;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiFont;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiNew;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiOpen;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiPaste;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiSave;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiStatusBar;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiUndo;
+
+        private System.Windows.Forms.ToolStripMenuItem tsmiWordWrap;
+
+        private System.Windows.Forms.ToolStripStatusLabel tsslMessage;
+
+        private System.Windows.Forms.TextBox txtContent;
+
+        private System.Windows.Forms.ToolStripMenuItem 帮助HToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem 编辑EToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem 查看VToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem 格式FToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem 另存为AToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem 退出XToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// 清理所有正在使用的资源。
@@ -19,8 +89,6 @@
             }
             base.Dispose(disposing);
         }
-
-        #region Windows 窗体设计器生成的代码
 
         /// <summary>
         /// 设计器支持所需的方法 - 不要修改
@@ -286,38 +354,8 @@
             this.sspStatus.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmiNew;
-        private System.Windows.Forms.ToolStripMenuItem tsmiOpen;
-        private System.Windows.Forms.ToolStripMenuItem tsmiSave;
-        private System.Windows.Forms.ToolStripMenuItem 另存为AToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem 退出XToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 编辑EToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmiUndo;
-        private System.Windows.Forms.ToolStripMenuItem 格式FToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 查看VToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 帮助HToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tsmiWordWrap;
-        private System.Windows.Forms.ToolStripMenuItem tsmiFont;
-        private System.Windows.Forms.Panel plBorder;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem tsmiCut;
-        private System.Windows.Forms.ToolStripMenuItem tsmiCopy;
-        private System.Windows.Forms.ToolStripMenuItem tsmiPaste;
-        private System.Windows.Forms.ToolStripMenuItem tsmiDelete;
-        private System.Windows.Forms.TextBox txtContent;
-        private System.Windows.Forms.ToolStripMenuItem tsmiStatusBar;
-        private System.Windows.Forms.StatusStrip sspStatus;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel tsslMessage;
     }
 }
-

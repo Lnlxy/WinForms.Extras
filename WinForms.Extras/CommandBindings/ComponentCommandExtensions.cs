@@ -1,4 +1,14 @@
-﻿using System.ComponentModel;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="ComponentCommandExtensions.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.ComponentModel;
 using System.Linq.Expressions;
 
 namespace System.Windows.Forms
@@ -8,32 +18,25 @@ namespace System.Windows.Forms
     /// </summary>
     public static class ComponentCommandExtensions
     {
+        #region Methods
+
         /// <summary>
         /// 添加命令。
         /// </summary>
         /// <param name="component">目标组件</param>
-        /// <param name="command">命令。</param> 
+        /// <param name="command">命令。</param>
         public static void Command(this Component component, ICommand command)
         {
             component.Event().Command(command);
         }
+
         /// <summary>
         /// 添加命令。
         /// </summary>
         /// <param name="component">目标组件</param>
         /// <param name="command">命令。</param>
-        /// <param name="commandParameter">命令执行参数。</param> 
+        /// <param name="commandParameter">命令执行参数。</param>
         public static void Command(this Component component, ICommand command, IValueObject commandParameter)
-        {
-            component.Event().Command(command, commandParameter);
-        }
-        /// <summary>
-        /// 添加命令。
-        /// </summary>
-        /// <param name="component">目标组件</param>
-        /// <param name="command">命令。</param>
-        /// <param name="commandParameter">命令执行参数。</param> 
-        public static void Command(this Component component, ICommand command, ValueObject commandParameter)
         {
             component.Event().Command(command, commandParameter);
         }
@@ -46,10 +49,23 @@ namespace System.Windows.Forms
         /// <param name="component">目标组件</param>
         /// <param name="command">命令。</param>
         /// <param name="source">数据源。</param>
-        /// <param name="expression">参数表达式。</param> 
+        /// <param name="expression">参数表达式。</param>
         public static void Command<TSource, TParameter>(this Component component, ICommand command, TSource source, Expression<Func<TSource, TParameter>> expression)
         {
             component.Event().Command(command, source, expression);
         }
+
+        /// <summary>
+        /// 添加命令。
+        /// </summary>
+        /// <param name="component">目标组件</param>
+        /// <param name="command">命令。</param>
+        /// <param name="commandParameter">命令执行参数。</param>
+        public static void Command(this Component component, ICommand command, ValueObject commandParameter)
+        {
+            component.Event().Command(command, commandParameter);
+        }
+
+        #endregion
     }
 }

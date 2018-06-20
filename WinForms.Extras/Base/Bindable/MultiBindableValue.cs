@@ -1,4 +1,14 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="MultiBindableValue.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -9,12 +19,13 @@ namespace System.Windows.Forms
     /// </summary>
     public class MultiBindableValue : IBindableValue
     {
+        #region Fields
+
         private readonly List<IValueObject> _items = new List<IValueObject>();
 
-        public MultiBindableValue(IValueObject item1, IValueObject item2, params IValueObject[] items)
-            : this(new List<IValueObject> { item1, item2 }.Concat(items).ToList())
-        {
-        }
+        #endregion
+
+        #region Constructors
 
         public MultiBindableValue(IEnumerable<IValueObject> items)
         {
@@ -25,23 +36,41 @@ namespace System.Windows.Forms
             _items.AddRange(items);
         }
 
+        public MultiBindableValue(IValueObject item1, IValueObject item2, params IValueObject[] items)
+            : this(new List<IValueObject> { item1, item2 }.Concat(items).ToList())
+        {
+        }
+
+        #endregion
+
+        #region Events
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public event EventHandler ValueChanged;
 
-        public Type[] ValueTypes { get => _items.Select(i => i.Type).ToArray(); }
+        #endregion
+
+        #region Properties
 
         public Type Type => typeof(object[]);
 
         public object[] Value { get => GetValue(); set => SetValue(value); }
+
+        public Type[] ValueTypes { get => _items.Select(i => i.Type).ToArray(); }
+
         object IValueObject.Value { get => Value; set => Value = (object[])value; }
 
-        object[] GetValue()
+        #endregion
+
+        #region Methods
+
+        internal object[] GetValue()
         {
             return _items.Select(i => i.Value).ToArray();
         }
 
-        void SetValue(object[] newValue)
+        internal void SetValue(object[] newValue)
         {
             for (int i = 0; i < _items.Count; i++)
             {
@@ -54,5 +83,7 @@ namespace System.Windows.Forms
             ValueChanged?.Invoke(this, EventArgs.Empty);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
         }
+
+        #endregion
     }
 }

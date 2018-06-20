@@ -1,18 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="SourceEventDescriptor.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
 using System.Reflection;
-using System.Text;
 
 namespace System.Windows.Forms.Internals
 {
-    class SourceEventDescriptor : SourceMemberDescriptor
+    internal class SourceEventDescriptor : SourceMemberDescriptor
     {
+        #region Fields
+
         private readonly EventInfo _event;
+
+        #endregion
+
+        #region Constructors
+
         public SourceEventDescriptor(EventInfo eventInfo) : base(eventInfo.Name)
         {
             _event = eventInfo;
         }
+
+        #endregion
+
+        #region Methods
 
         public void AddEventHandler(object target, EventHandler handler)
         {
@@ -23,5 +40,7 @@ namespace System.Windows.Forms.Internals
         {
             _event.RemoveEventHandler(target, handler);
         }
+
+        #endregion
     }
 }

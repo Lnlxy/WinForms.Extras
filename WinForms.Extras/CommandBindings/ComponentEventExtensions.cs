@@ -1,6 +1,15 @@
-﻿using System.ComponentModel;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="ComponentEventExtensions.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.ComponentModel;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace System.Windows.Forms
 {
@@ -9,6 +18,8 @@ namespace System.Windows.Forms
     /// </summary>
     public static class ComponentEventExtensions
     {
+        #region Methods
+
         /// <summary>
         /// 创建组件的默认事件信息。
         /// </summary>
@@ -30,5 +41,7 @@ namespace System.Windows.Forms
         {
             return new ComponentEvent(component, eventName);
         }
+
+        #endregion
     }
 }

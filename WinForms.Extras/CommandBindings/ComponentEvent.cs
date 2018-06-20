@@ -1,21 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="ComponentEvent.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
 using System.ComponentModel;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Windows.Forms.Internals;
 
 namespace System.Windows.Forms
 {
     public sealed class ComponentEvent
     {
+        #region Fields
 
         private readonly CommandTarget commandTarget;
+
+        #endregion
+
+        #region Constructors
+
         public ComponentEvent(Component component, string eventName)
         {
             commandTarget = new CommandTarget(component, eventName);
         }
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// 添加命令。
         /// </summary>
@@ -25,6 +41,7 @@ namespace System.Windows.Forms
         {
             new CommandBinding(command, commandTarget);
         }
+
         /// <summary>
         /// 添加命令。
         /// </summary>
@@ -32,16 +49,6 @@ namespace System.Windows.Forms
         /// <param name="commandParameter">命令执行参数。</param>
         /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
         public void Command(ICommand command, IValueObject commandParameter)
-        {
-            new CommandBinding(command, commandTarget, commandParameter);
-        }
-        /// <summary>
-        /// 添加命令。
-        /// </summary>
-        /// <param name="command">命令。</param>
-        /// <param name="commandParameter">命令执行参数。</param>
-        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
-        public void Command(ICommand command, ValueObject commandParameter)
         {
             new CommandBinding(command, commandTarget, commandParameter);
         }
@@ -64,5 +71,18 @@ namespace System.Windows.Forms
             }
             Command(command, source.CreateBindableValue(expression));
         }
+
+        /// <summary>
+        /// 添加命令。
+        /// </summary>
+        /// <param name="command">命令。</param>
+        /// <param name="commandParameter">命令执行参数。</param>
+        /// <returns>返回 <see cref="CommandBinding"/> 新实例。</returns>
+        public void Command(ICommand command, ValueObject commandParameter)
+        {
+            new CommandBinding(command, commandTarget, commandParameter);
+        }
+
+        #endregion
     }
 }

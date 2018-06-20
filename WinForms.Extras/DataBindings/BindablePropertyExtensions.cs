@@ -1,4 +1,14 @@
-﻿using System.ComponentModel;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="BindablePropertyExtensions.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -6,6 +16,8 @@ namespace System.Windows.Forms
 {
     public static class BindablePropertyExtensions
     {
+        #region Methods
+
         /// <summary>
         /// 创建由组件指定的默认属性的绑定属性。
         /// </summary>
@@ -79,11 +91,10 @@ namespace System.Windows.Forms
 
         ///<summary>
         /// 设置控件更新方式。
-        /// </summary>
-        /// <typeparam name="Binding">绑定类型。</typeparam>
+        /// </summary> 
         /// <param name="property">源。</param>
         /// <param name="mode">模式。</param>
-        /// <returns>返回设置完成后的 <typeparamref name="IBindableProperty"/>。</returns>
+        /// <returns></returns>
         public static IBindableProperty SetControlUpdateMode(this IBindableProperty property, ControlUpdateMode mode)
         {
             property.ControlUpdateMode = mode;
@@ -93,14 +104,14 @@ namespace System.Windows.Forms
         /// <summary>
         /// 设置数据源更新方式。
         /// </summary>
-        /// <typeparam name="Binding">绑定类型。</typeparam>
-        /// <param name="binding">源。</param>
+        /// <param name="property">属性。</param>
         /// <param name="mode">模式。</param>
-        /// <returns>返回设置完成后的 <typeparamref name="IBindableProperty"/>。</returns>
         public static IBindableProperty SetDataSourceUpdateMode(this IBindableProperty property, DataSourceUpdateMode mode)
         {
             property.DataSourceUpdateMode = mode;
             return property;
         }
+
+        #endregion
     }
 }

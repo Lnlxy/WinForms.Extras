@@ -1,9 +1,21 @@
-﻿using System.Globalization;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="BooleanToCheckedStateConverter.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Globalization;
 
 namespace System.Windows.Forms
 {
     public sealed class BooleanToCheckedStateConverter : IValueConverter
     {
+        #region Methods
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool?)
@@ -61,5 +73,7 @@ namespace System.Windows.Forms
                 return false;
             }
         }
+
+        #endregion
     }
 }

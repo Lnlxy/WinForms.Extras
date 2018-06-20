@@ -1,6 +1,16 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="AssemblyInfo.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Reflection;
 using System.Runtime.InteropServices;
+
 
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改

@@ -1,13 +1,29 @@
-﻿namespace System.Windows.Forms
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="RelayCommand.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+namespace System.Windows.Forms
 {
     /// <summary>
     /// 提供执行指定方法的命令。
     /// </summary>
     public sealed class RelayCommand : ICommand
     {
+        #region Fields
+
         private readonly Func<object, bool> _canExecute;
 
         private readonly Action<object> _execute;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// 初始化 <see cref="RelayCommand"/> 新实例。
@@ -28,6 +44,10 @@
             _canExecute = canExecute;
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// 确定表示该命令是否能被执行。
         /// </summary>
@@ -47,6 +67,8 @@
             if (_canExecute?.Invoke(parameter) ?? true)
                 _execute(parameter);
         }
+
+        #endregion
     }
 
     /// <summary>
@@ -54,9 +76,15 @@
     /// </summary>
     public sealed class RelayCommand<T> : ICommand
     {
+        #region Fields
+
         private readonly Func<T, bool> _canExecute;
 
         private readonly Action<T> _execute;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// 初始化 <see cref="RelayCommand{T}"/> 新实例。
@@ -77,6 +105,10 @@
             _canExecute = canExecute;
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// 确定表示该命令是否能被执行。
         /// </summary>
@@ -96,5 +128,7 @@
             if (_canExecute?.Invoke((T)parameter) ?? true)
                 _execute((T)parameter);
         }
+
+        #endregion
     }
 }

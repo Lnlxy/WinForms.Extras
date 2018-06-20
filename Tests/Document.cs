@@ -1,27 +1,46 @@
-﻿using System.ComponentModel;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="Document.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 
 namespace Tests
 {
-    class Document : INotifyPropertyChanged
+    internal class Document : INotifyPropertyChanged
     {
+        #region Fields
+
         private string path, title, content;
+
         private bool saved = true;
+
+        #endregion
+
+        #region Constructors
+
+        public Document()
+        {
+            title = "无标题";
+            saved = true;
+        }
+
+        #endregion
+
+        #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public bool IsSaved
-        {
-            get => saved; private set
-            {
-                if (value != saved)
-                {
-                    saved = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsSaved"));
-                }
-            }
-        }
+        #endregion
+
+        #region Properties
 
         public string Content
         {
@@ -33,6 +52,18 @@ namespace Tests
                     content = value;
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Content"));
                     IsSaved = false;
+                }
+            }
+        }
+
+        public bool IsSaved
+        {
+            get => saved; private set
+            {
+                if (value != saved)
+                {
+                    saved = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsSaved"));
                 }
             }
         }
@@ -63,10 +94,21 @@ namespace Tests
             }
         }
 
-        public Document()
+        #endregion
+
+        #region Methods
+
+        public static Document Open(string path)
         {
-            title = "无标题";
-            saved = true;
+
+            var content = File.ReadAllText(path);
+            return new Document()
+            {
+                content = content,
+                path = path,
+                saved = true,
+                title = System.IO.Path.GetFileName(path)
+            };
         }
 
         public void Save()
@@ -91,20 +133,8 @@ namespace Tests
 
         public void SaveAs(string path)
         {
-
         }
 
-        public static Document Open(string path)
-        {
-
-            var content = File.ReadAllText(path);
-            return new Document()
-            {
-                content = content,
-                path = path,
-                saved = true,
-                title = System.IO.Path.GetFileName(path)
-            };
-        }
+        #endregion
     }
 }

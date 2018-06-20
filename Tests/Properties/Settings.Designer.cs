@@ -8,19 +8,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Tests.Properties {
-    
-    
+namespace Tests.Properties
+{
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+        #region Fields
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default {
-            get {
+
+        #endregion
+
+        #region Properties
+
+        public static Settings Default
+        {
+            get
+            {
                 return defaultInstance;
             }
         }
+
+        #endregion
     }
 }

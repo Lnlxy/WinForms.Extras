@@ -1,13 +1,27 @@
-﻿using System.Globalization;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="IBindableProperty.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Globalization;
 using System.Linq.Expressions;
 
 namespace System.Windows.Forms
 {
+    #region Interfaces
+
     /// <summary>
     /// 定义支持绑定方法属性信息。
     /// </summary>
     public interface IBindableProperty
     {
+        #region Properties
+
         /// <summary>
         /// 获取或设置一个值，该值表示控件属性更新方式。
         /// </summary>
@@ -22,6 +36,10 @@ namespace System.Windows.Forms
         /// 获取一个值，该值表示属性名称。
         /// </summary>
         string PropertyName { get; }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// 绑定指定的值到属性。
@@ -80,15 +98,6 @@ namespace System.Windows.Forms
         IBindableProperty Binding(object dataSource, string member, IValueConverter converter, object convertParameter = null, CultureInfo culture = null);
 
         /// <summary>
-        /// 绑定指定的值到属性。
-        /// </summary>
-        /// <param name="value">绑定的值。</param>
-        /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
-        /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
-        /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
-        IBindableProperty Binding(ValueObject value);
-
-        /// <summary>
         /// 绑定数据源与成员到属性。
         /// </summary>
         /// <typeparam name="TSource">数据源类型。</typeparam>
@@ -138,9 +147,22 @@ namespace System.Windows.Forms
         IBindableProperty Binding(Type dataSourceType, string member, IValueConverter converter, object convertParameter = null, CultureInfo culture = null);
 
         /// <summary>
+        /// 绑定指定的值到属性。
+        /// </summary>
+        /// <param name="value">绑定的值。</param>
+        /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
+        /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
+        /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
+        IBindableProperty Binding(ValueObject value);
+
+        /// <summary>
         /// 确定该属性是否已绑定。
         /// </summary>
         /// <returns>返回一个值，确定属性是否已绑定。</returns>
         bool IsBinded();
+
+        #endregion
     }
+
+    #endregion
 }

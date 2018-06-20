@@ -1,9 +1,23 @@
-﻿using System.Globalization;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="IMultiValueConverter.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Globalization;
 
 namespace System.Windows.Forms
 {
+    #region Interfaces
+
     public interface IMultiValueConverter
     {
+        #region Methods
+
         /// <summary>
         /// 将源值转换为绑定源的值。数据绑定引擎在将值从绑定源传播给绑定目标时，调用此方法。
         /// </summary>
@@ -23,5 +37,9 @@ namespace System.Windows.Forms
         /// <param name="culture">要用在转换器中的区域性。</param>
         /// <returns>从目标值转换回源值的值的数组。</returns>
         object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture);
+
+        #endregion
     }
+
+    #endregion
 }

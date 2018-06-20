@@ -1,4 +1,14 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="BindableExtensions.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -6,6 +16,8 @@ namespace System.Windows.Forms
 {
     public static class BindableExtensions
     {
+        #region Methods
+
         /// <summary>
         /// 创建数据绑定新实例。
         /// </summary>
@@ -36,5 +48,7 @@ namespace System.Windows.Forms
             }
             return new MultiBindableValue(bindableValues);
         }
+
+        #endregion
     }
 }

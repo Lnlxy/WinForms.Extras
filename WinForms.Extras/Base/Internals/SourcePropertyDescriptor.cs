@@ -1,4 +1,14 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="SourcePropertyDescriptor.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
@@ -6,22 +16,36 @@ namespace System.Windows.Forms.Internals
 {
     internal class SourcePropertyDescriptor : SourceMemberDescriptor
     {
+        #region Fields
+
         private readonly PropertyInfo _property;
 
         private readonly Dictionary<object, EventHandler> events = new Dictionary<object, EventHandler>();
 
         private readonly object syncObj = new object();
 
+        #endregion
+
+        #region Constructors
+
         public SourcePropertyDescriptor(PropertyInfo propertyInfo) : base(propertyInfo.Name)
         {
             _property = propertyInfo;
         }
+
+        #endregion
+
+        #region Properties
 
         public bool IsReadOnly { get => !_property.CanWrite; }
 
         public Type PropertyType { get => _property.PropertyType; }
 
         public Type ReflectedType { get => _property.ReflectedType; }
+
+        #endregion
+
+        #region Methods
 
         public void AddValueChanged(object source, EventHandler eventHandler)
         {
@@ -95,5 +119,7 @@ namespace System.Windows.Forms.Internals
                 events[sender]?.Invoke(sender, e);
             }
         }
+
+        #endregion
     }
 }

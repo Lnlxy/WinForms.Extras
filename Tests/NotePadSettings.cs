@@ -1,20 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="NotePadSettings.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 
 namespace Tests
 {
-    class NotePadSettings : INotifyPropertyChanged
+    internal class NotePadSettings : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private bool wordWrap = false;
-        private bool showSatausBar = false;
+        #region Fields
 
         private Font font;
+
+        private bool showSatausBar = false;
+
+        private bool wordWrap = false;
+
+        #endregion
+
+        #region Events
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Properties
+
         public Font Font
         {
             get => font;
@@ -40,7 +58,6 @@ namespace Tests
             }
         }
 
-
         /// <summary>
         /// 自动换行。
         /// </summary>
@@ -56,5 +73,7 @@ namespace Tests
                 }
             }
         }
+
+        #endregion
     }
 }

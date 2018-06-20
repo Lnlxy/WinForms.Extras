@@ -1,13 +1,29 @@
-﻿using System.Collections.Generic;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="SourceTypeDescriptor.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Collections.Generic;
 using System.Linq;
 
 namespace System.Windows.Forms.Internals
 {
     internal class SourceTypeDescriptor
     {
+        #region Fields
+
         private static readonly Dictionary<Type, List<SourceMemberDescriptor>> members = new Dictionary<Type, List<SourceMemberDescriptor>>();
 
         private static readonly object syncObj = new object();
+
+        #endregion
+
+        #region Methods
 
         public static SourceEventDescriptor GetEvent(object source, string eventName)
         {
@@ -57,5 +73,7 @@ namespace System.Windows.Forms.Internals
                 return (TDescriptor)member;
             }
         }
+
+        #endregion
     }
 }

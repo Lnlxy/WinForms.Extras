@@ -1,13 +1,29 @@
-﻿using System.Globalization;
+﻿// ***********************************************************************
+// Author           : Hoze(hoze@live.cn)
+// Created          : 06-20-2018
+//
+// ***********************************************************************
+// <copyright file="MultiDataBinding.cs" company="Park Plus Inc.">
+//     Copyright 2015 - 2018 (c) Park Plus Inc. All rights reserved.
+// </copyright>
+// ***********************************************************************
+
+using System.Globalization;
 
 namespace System.Windows.Forms
 {
     /// <summary>
     /// 多值绑定。
     /// </summary>
-    class MultiDataBinding : Binding
+    internal class MultiDataBinding : Binding
     {
+        #region Fields
+
         private readonly Type[] _types = null;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// 初始化 <see cref="MultiDataBinding"/> 新实例。
@@ -70,6 +86,10 @@ namespace System.Windows.Forms
         {
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// 获取一个值，该值表示转换器。
         /// </summary>
@@ -85,6 +105,10 @@ namespace System.Windows.Forms
         /// </summary>
         public CultureInfo Culture { get; private set; }
 
+        #endregion
+
+        #region Methods
+
         protected override void OnFormat(ConvertEventArgs cevent)
         {
             var values = (object[])cevent.Value;
@@ -96,5 +120,7 @@ namespace System.Windows.Forms
             var values = Converter.ConvertBack(cevent.Value, _types, ConvertParameter, Culture);
             cevent.Value = values;
         }
+
+        #endregion
     }
 }
