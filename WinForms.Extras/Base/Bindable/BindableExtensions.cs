@@ -14,6 +14,9 @@ using System.Reflection;
 
 namespace System.Windows.Forms
 {
+    /// <summary>
+    /// 功能拓展。
+    /// </summary>
     public static class BindableExtensions
     {
         #region Methods
@@ -37,6 +40,16 @@ namespace System.Windows.Forms
             return new BindableValue(dataSource, member.Member.Name);
         }
 
+        /// <summary>
+        /// 创建多值绑定实例。
+        /// </summary>
+        /// <typeparam name="TSource">数据源类型。</typeparam>
+        /// <typeparam name="TProperty">属性类型。</typeparam>
+        /// <param name="dataSource">数据源。</param>
+        /// <param name="expression1">表达式1。</param>
+        /// <param name="expression2">表达式2。</param>
+        /// <param name="expressions">表达式。</param>
+        /// <returns></returns>
         public static MultiBindableValue CreateMultiBindableValue<TSource, TProperty>(this TSource dataSource, Expression<Func<TSource, TProperty>> expression1, Expression<Func<TSource, TProperty>> expression2, params Expression<Func<TSource, TProperty>>[] expressions)
         {
             var bindableValues = new List<IBindableValue>();

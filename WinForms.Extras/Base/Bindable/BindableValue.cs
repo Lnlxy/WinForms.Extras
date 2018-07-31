@@ -120,20 +120,38 @@ namespace System.Windows.Forms
 
         #region Events
 
+        /// <summary>
+        /// 属性值发生改变时引发。
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// 值改变事件，用于 <see cref="Control.DataBindings"/> 使用。
+        /// </summary>
         public event EventHandler ValueChanged;
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// 数据源。
+        /// </summary>
         public Object DataSource { get; private set; }
 
+        /// <summary>
+        /// 获取一个值，该值表示属性名称。
+        /// </summary>
         public string PropertyName => _property.Name;
 
+        /// <summary>
+        /// 获取一个值，该值表示属性类型。
+        /// </summary>
         public Type Type => _property.PropertyType;
 
+        /// <summary>
+        /// 获取一个值，该值表示属性值。
+        /// </summary>
         public object Value
         {
             get

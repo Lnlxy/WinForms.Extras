@@ -12,10 +12,21 @@ using System.Globalization;
 
 namespace System.Windows.Forms
 {
+    /// <summary>
+    /// 将 <see cref="bool"/> 转换为 <see cref="CheckState"/> 值。
+    /// </summary>
     public sealed class BooleanToCheckedStateConverter : IValueConverter
     {
         #region Methods
 
+        /// <summary>
+        /// 转换。
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool?)

@@ -53,7 +53,7 @@ namespace System.Windows.Forms
         /// <param name="propertyName">绑定的属性名称。</param>
         /// <param name="dataSource">数据源。</param>
         /// <param name="dataMember">数据成员。</param>
-        /// <param name="converter">转换器。</param>
+        /// <param name="valueConverter">转换器。</param>
         /// <param name="convertParameter">转换参数。</param>
         public DataBinding(string propertyName, object dataSource, string dataMember, IValueConverter valueConverter, object convertParameter)
             : this(propertyName, dataSource, dataMember, valueConverter, convertParameter, CultureInfo.CurrentCulture)

@@ -189,7 +189,7 @@ namespace System.Windows.Forms
         /// <typeparam name="TSource">数据源类型。</typeparam>
         /// <typeparam name="TMember">数据源成员类型。</typeparam>
         /// <param name="dataSource">数据源。</param>
-        /// <param name="member">数据源成员。</param>
+        /// <param name="expression">表达式。</param>
         /// <returns>返回已绑定的 <see cref="Forms.Binding"/> 实例。</returns>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
@@ -205,7 +205,7 @@ namespace System.Windows.Forms
         /// <typeparam name="TSource">数据源类型。</typeparam>
         /// <typeparam name="TMember">数据源成员类型。</typeparam>
         /// <param name="dataSource">数据源。</param>
-        /// <param name="member">数据源成员。</param>
+        /// <param name="expression">表达式。</param>
         /// <param name="converter">更新时，值转换器。</param>
         /// <param name="convertParameter">转换参数。</param>
         /// <param name="culture">区域信息。</param>
@@ -239,7 +239,7 @@ namespace System.Windows.Forms
         /// <param name="member">数据源成员。</param>
         /// <param name="converter">更新时，值转换器。</param>
         /// <param name="convertParameter">转换参数。</param>
-        /// <param name="culture">区域信息。</param>ing"/> 实例。</returns>
+        /// <param name="culture">区域信息。</param>
         /// <exception cref="ArgumentException">给定数据为null时引发。</exception>
         /// <exception cref="ArgumentNullException">控件属性是已绑定到数据或<see cref="Forms.Binding"/> 未指定的有效列时引发。</exception>
         public IBindableProperty Binding(Type dataSourceType, string member, IValueConverter converter, object convertParameter = null, CultureInfo culture = null)

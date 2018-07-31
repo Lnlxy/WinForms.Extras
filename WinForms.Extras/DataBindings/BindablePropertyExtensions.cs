@@ -14,6 +14,9 @@ using System.Linq.Expressions;
 
 namespace System.Windows.Forms
 {
+    /// <summary>
+    /// 拓展方法。
+    /// </summary>
     public static class BindablePropertyExtensions
     {
         #region Methods
